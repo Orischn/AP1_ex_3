@@ -2,8 +2,7 @@
 #include <string>
 #include <vector>
 #include "file.hpp"
-
-using namespace std;
+#include "flower.hpp"
 
 /*
  * The function takes all the data from the files with information about flowers,
@@ -11,10 +10,10 @@ using namespace std;
  * Input: a path to a file.
  * Output: a pointer to an array with the data in the file in the format of a Flower.
  */
-vector<Flower> getDataFromFile(string path) {
-    ifstream input;
-    string line;
-    vector<Flower> flowers;
+std::vector<Flower> file::getDataFromFile(std::string path) {
+    std::ifstream input;
+    std::string line;
+    std::vector<Flower> flowers;
     input.open(path);
     while(getline(input, line)) {
         Flower flower;
@@ -32,10 +31,10 @@ vector<Flower> getDataFromFile(string path) {
     return flowers;
 }
 
-void writeDataToFile(vector<Flower> flowers, string path) {
-    ofstream output;
+void file::writeDataToFile(std::vector<Flower> flowers, std::string path) {
+    std::ofstream output;
     output.open(path);
     for (Flower flower : flowers) {
-        output<<flower.getFlowerType()<<endl;
+        output<<flower.getFlowerType()<<std::endl;
     }
 }

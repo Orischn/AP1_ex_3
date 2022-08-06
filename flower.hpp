@@ -4,15 +4,13 @@
 #include <vector>
 #include <string>
 
-using namespace std;
-
 class Flower {
     private :
         double sepalWidth;
         double sepalLength;
         double petalWidth;
         double petalLength;
-        string flowerType;
+        std::string flowerType;
     public :
         //CTORS
         Flower();
@@ -22,13 +20,13 @@ class Flower {
         void setSepalLength(double sepalLength);
         void setPetalWidth(double petalWidth);
         void setPetalLength(double petalLength);
-        void setFlowerType(string flowerType);
+        void setFlowerType(std::string flowerType);
         //getters
         double getSepalWidth();
         double getSepalLength();
         double getPetalWidth();
         double getPetalLength();
-        string getFlowerType();
+        std::string getFlowerType();
         /*
          * Returns the euclidian distance from this flower to a different flower.
          * Input: A flower.
@@ -53,7 +51,7 @@ class Flower {
         * Input: An Array of classified flowers, the length of array, 
         * the k number from the KNN algorithm, and a distance function.
         */
-        void classifyFlower(vector<Flower> cFlowers, int k, double (Flower::*distance)(Flower));
+        void classifyFlower(std::vector<Flower> cFlowers, int k, double (Flower::*distance)(Flower));
 };
 
 #endif

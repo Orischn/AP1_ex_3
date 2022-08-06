@@ -1,10 +1,7 @@
 #include "flower.hpp"
 #include <cmath>
 #include <string>
-#include <iostream>
 #include <vector>
-
-using namespace std;
 
 Flower::Flower() {
     this->sepalWidth = 0;
@@ -37,7 +34,7 @@ void Flower::setPetalLength(double petalLength) {
     this->petalLength = petalLength;
 }
 
-void Flower::setFlowerType(string flowerType) {
+void Flower::setFlowerType(std::string flowerType) {
     this->flowerType = flowerType;
 }
 
@@ -57,33 +54,33 @@ double Flower::getPetalLength() {
     return this->petalLength;
 }
 
-string Flower::getFlowerType() {
+std::string Flower::getFlowerType() {
     return this->flowerType;
 }
 
 double Flower::euclidianDisTo(Flower flower) {
-    return pow(pow(abs(this->sepalLength - flower.sepalLength), 2) +
-            pow(abs(this->sepalWidth - flower.sepalWidth), 2) +
-            pow(abs(this->petalLength - flower.petalLength), 2) +
-            pow(abs(this->petalWidth - flower.petalWidth), 2), 0.5);
+    return pow(pow(std::abs(this->sepalLength - flower.sepalLength), 2) +
+            pow(std::abs(this->sepalWidth - flower.sepalWidth), 2) +
+            pow(std::abs(this->petalLength - flower.petalLength), 2) +
+            pow(std::abs(this->petalWidth - flower.petalWidth), 2), 0.5);
 }
 
 double Flower::manhattanDisTo(Flower flower) {
-    return abs(this->sepalLength - flower.sepalLength) +
-            abs(this->sepalWidth - flower.sepalWidth) +
-            abs(this->petalLength - flower.petalLength) +
-            abs(this->petalWidth - flower.petalWidth);
+    return std::abs(this->sepalLength - flower.sepalLength) +
+            std::abs(this->sepalWidth - flower.sepalWidth) +
+            std::abs(this->petalLength - flower.petalLength) +
+            std::abs(this->petalWidth - flower.petalWidth);
 }
 
 double Flower::chebyshevDisTo(Flower flower) {
-    double max1 = max(abs(this->sepalLength - flower.sepalLength),
-                        abs(this->sepalWidth - flower.sepalWidth));
-    double max2 = max(abs(this->petalLength - flower.petalLength),
-                        abs(this->petalWidth - flower.petalWidth));
-    return max(max1, max2);
+    double max1 = std::max(std::abs(this->sepalLength - flower.sepalLength),
+                        std::abs(this->sepalWidth - flower.sepalWidth));
+    double max2 = std::max(std::abs(this->petalLength - flower.petalLength),
+                        std::abs(this->petalWidth - flower.petalWidth));
+    return std::max(max1, max2);
 }
 
-void Flower::classifyFlower(vector<Flower> cFlowers, int k, double (Flower::*distance)(Flower)) {
+void Flower::classifyFlower(std::vector<Flower> cFlowers, int k, double (Flower::*distance)(Flower)) {
     for (int i = 0; i < cFlowers.size(); i++) {
         for (int j = i + 1; j < cFlowers.size(); j++) {
             if ((this->*distance)(cFlowers[i]) > (this->*distance)(cFlowers[j])) {
@@ -93,7 +90,7 @@ void Flower::classifyFlower(vector<Flower> cFlowers, int k, double (Flower::*dis
             }
         }
     }
-    vector<int> flowerTypes;
+    std::vector<int> flowerTypes;
     for (int i = 0; i < 3; i++) {
         flowerTypes.push_back(0);
     }
