@@ -6,4 +6,4 @@ namespace sock {
     int acceptClient(int sock);
 };
 
-#endif1
+#endif
