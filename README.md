@@ -9,12 +9,12 @@ We set the type of unclassified flower as the most appeared type from above, whi
 
 To compile the project use the following command:
 
-g++ *.cpp -std=c++11 -o main.exe
+g++ -IsocketHandling serverSide/*.cpp socketHandling/sock.cpp -o server.exe -std=c++11 && g++ -Isockethandling clientSide/*.cpp socketHandling/sock.cpp -o client.exe -std=c++11
 
-To run the project after compiling, use the following command:
+To run the server side use:
 
-./main.exe k
+./server.exe
 
-(k is the **number** from the KNN algorithm, which means you put a number at the command line, and not the char 'k').
+To run the client side use:
 
-The output files will be created in the directory named 'out'.
+./client.exe
