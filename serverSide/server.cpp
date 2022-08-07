@@ -7,12 +7,14 @@
 #include "flower.hpp"
 #include "sock.hpp"
 
+#define SERVER_PORT 1234
+
 int main(int argc, char** argv) {
     int sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock < 0) {
         perror("error creating socket");
     }
-    sock::bindSocket(sock);
+    sock::bindSocketToPort(sock, SERVER_PORT);
     int client_sock = sock::acceptClient(sock);
 
     char buffer[4096];
@@ -26,7 +28,7 @@ int main(int argc, char** argv) {
     else {
         std::cout<<buffer<<std::endl;
     }
-    char message[] = "success\n";
+    char message[] = "success";
     int sent_bytes = send(client_sock, message, read_bytes, 0);
     if (sent_bytes < 0) {
         perror("error sending to client");
