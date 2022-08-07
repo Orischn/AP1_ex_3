@@ -9,7 +9,7 @@ We set the type of unclassified flower as the most appeared type from above, whi
 
 To compile the project use the following command:
 
-g++ -IsocketHandling serverSide/*.cpp socketHandling/sock.cpp -o server.exe -std=c++11 && g++ -Isockethandling clientSide/*.cpp socketHandling/sock.cpp -o client.exe -std=c++11
+g++ -IsocketHandling serverSide/*.cpp socketHandling/sock.cpp -o server.exe -std=c++11 && g++ -IsocketHandling clientSide/*.cpp socketHandling/sock.cpp -o client.exe -std=c++11
 
 To run the server side use:
 
