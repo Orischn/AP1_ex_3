@@ -31,7 +31,7 @@ std::vector<Flower> file::getDataFromFile(std::string path) {
     return flowers;
 }
 
-void file::writeDataToFile(std::vector<Flower> flowers, std::string path) {
+void file::writeDataToFile(const std::vector<Flower>& flowers, std::string path) {
     std::ofstream output;
     output.open(path);
     for (Flower flower : flowers) {

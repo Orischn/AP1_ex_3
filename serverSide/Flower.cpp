@@ -38,41 +38,41 @@ void Flower::setFlowerType(std::string flowerType) {
     this->flowerType = flowerType;
 }
 
-double Flower::getSepalWidth() {
+double Flower::getSepalWidth() const {
     return this->sepalWidth;
 }
 
-double Flower::getSepalLength() {
+double Flower::getSepalLength() const {
     return this->sepalLength;
 }
 
-double Flower::getPetalWidth() {
+double Flower::getPetalWidth() const {
     return this->petalWidth;
 }
 
-double Flower::getPetalLength() {
+double Flower::getPetalLength() const {
     return this->petalLength;
 }
 
-std::string Flower::getFlowerType() {
+std::string Flower::getFlowerType() const {
     return this->flowerType;
 }
 
-double Flower::euclidianDisTo(Flower flower) {
+double Flower::euclidianDisTo(Flower flower) const {
     return pow(pow(std::abs(this->sepalLength - flower.sepalLength), 2) +
             pow(std::abs(this->sepalWidth - flower.sepalWidth), 2) +
             pow(std::abs(this->petalLength - flower.petalLength), 2) +
             pow(std::abs(this->petalWidth - flower.petalWidth), 2), 0.5);
 }
 
-double Flower::manhattanDisTo(Flower flower) {
+double Flower::manhattanDisTo(Flower flower) const {
     return std::abs(this->sepalLength - flower.sepalLength) +
             std::abs(this->sepalWidth - flower.sepalWidth) +
             std::abs(this->petalLength - flower.petalLength) +
             std::abs(this->petalWidth - flower.petalWidth);
 }
 
-double Flower::chebyshevDisTo(Flower flower) {
+double Flower::chebyshevDisTo(Flower flower) const {
     double max1 = std::max(std::abs(this->sepalLength - flower.sepalLength),
                         std::abs(this->sepalWidth - flower.sepalWidth));
     double max2 = std::max(std::abs(this->petalLength - flower.petalLength),

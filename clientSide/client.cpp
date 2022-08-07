@@ -31,7 +31,7 @@ int main() {
     // error
     }
     else {
-        std::cout<<buffer<<std::endl;
+        std::cout<<buffer<<"\n";
     }
 
     close(sock);

@@ -10,7 +10,7 @@
 #define SERVER_PORT 1234
 
 int main(int argc, char** argv) {
-    int sock = socket(AF_INET, SOCK_STREAM, 0);
+    const int sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock < 0) {
         perror("error creating socket");
     }
@@ -26,7 +26,7 @@ int main(int argc, char** argv) {
         perror("error");
     }
     else {
-        std::cout<<buffer<<std::endl;
+        std::cout<<buffer<<"\n";
     }
     char message[] = "success";
     int sent_bytes = send(client_sock, message, read_bytes, 0);

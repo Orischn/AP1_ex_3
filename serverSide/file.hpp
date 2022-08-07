@@ -17,7 +17,7 @@ namespace file {
     * the given array.
     * Input: An array of flowers, the length of the array, a path to a file.
     */
-    void writeDataToFile(std::vector<Flower> flowers, std::string path);
+    void writeDataToFile(const std::vector<Flower>& flowers, std::string path);
 };
 
 #endif

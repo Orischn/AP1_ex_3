@@ -22,36 +22,36 @@ class Flower {
         void setPetalLength(double petalLength);
         void setFlowerType(std::string flowerType);
         //getters
-        double getSepalWidth();
-        double getSepalLength();
-        double getPetalWidth();
-        double getPetalLength();
-        std::string getFlowerType();
+        double getSepalWidth() const;
+        double getSepalLength() const;
+        double getPetalWidth() const;
+        double getPetalLength() const;
+        std::string getFlowerType() const;
         /*
          * Returns the euclidian distance from this flower to a different flower.
          * Input: A flower.
          * Output: The euclidian distance from this flower to the given flower.
          */
-        double euclidianDisTo(Flower flower);
+        double euclidianDisTo(Flower flower) const;
         /*
          * Returns the manhattan distance from this flower to a different flower.
          * Input: A flower.
          * Output: The manhattan distance from this flower to the given flower.
          */
-        double manhattanDisTo(Flower flower);
+        double manhattanDisTo(Flower flower) const;
         /*
          * Returns the chebyshev distance from this flower to a different flower.
          * Input: A flower.
          * Output: The chebyshev distance from this flower to the given flower.
          */
-        double chebyshevDisTo(Flower flower);
+        double chebyshevDisTo(Flower flower) const;
         /*
         * The function sorts the classified array using the distance function,
         * and then finds the type of the unclassified flower based on the KNN algorithm.
         * Input: An Array of classified flowers, the length of array, 
         * the k number from the KNN algorithm, and a distance function.
         */
-        void classifyFlower(std::vector<Flower> cFlowers, int k, double (Flower::*distance)(Flower));
+        void classifyFlower(std::vector<Flower> cFlowers, const int k, double (Flower::*distance)(Flower));
 };
 
 #endif
