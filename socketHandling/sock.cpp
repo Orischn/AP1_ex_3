@@ -1,16 +1,15 @@
 #include <netinet/in.h>
+#include <arpa/inet.h>
 #include <stdio.h>
 #include <string.h>
 #include "sock.hpp"
 
-#define SERVER_PORT 1234
-
-void sock::bindSocket(int sock) {
+void sock::bindSocketToPort(int sock, int port) {
     struct sockaddr_in sin;
     memset(&sin, 0, sizeof(sin));
     sin.sin_family = AF_INET;
     sin.sin_addr.s_addr = INADDR_ANY;
-    sin.sin_port = htons(SERVER_PORT);
+    sin.sin_port = htons(port);
     if (bind(sock, (struct sockaddr *) &sin, sizeof(sin)) < 0) {
         perror("error binding socket");
     }
@@ -27,4 +26,16 @@ int sock::acceptClient(int sock) {
         perror("error accepting client");
     }
     return client_socket;
+}
+
+void sock::connectToServer(int sock, const char* ip, int port) {
+    struct sockaddr_in sin;
+    memset(&sin, 0, sizeof(sin));
+    sin.sin_family = AF_INET;
+    sin.sin_addr.s_addr = inet_addr(ip);
+    sin.sin_port = htons(port);
+
+    if (connect(sock, (struct sockaddr *) &sin, sizeof(sin)) < 0) {
+        perror("error connecting to server");
+    }
 }
