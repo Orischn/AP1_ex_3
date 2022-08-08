@@ -11,13 +11,13 @@ namespace file {
     * Input: A path to a file.
     * Output: An array of flowers representing the data in the file.
     */
-    std::vector<Flower> getDataFromFile(std::string path);
+    std::vector<Flower> getDataFromFile(const std::string& path);
     /*
     * The function writes to the file with the given path the type of each flower in
     * the given array.
     * Input: An array of flowers, the length of the array, a path to a file.
     */
-    void writeDataToFile(const std::vector<Flower>& flowers, std::string path);
+    void writeDataToFile(const std::vector<Flower>& flowers, const std::string& path);
 };
 
 #endif

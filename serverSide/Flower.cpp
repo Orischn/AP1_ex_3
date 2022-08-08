@@ -58,21 +58,21 @@ std::string Flower::getFlowerType() const {
     return this->flowerType;
 }
 
-double Flower::euclidianDisTo(Flower flower) const {
+double Flower::euclidianDisTo(const Flower& flower) const {
     return pow(pow(std::abs(this->sepalLength - flower.sepalLength), 2) +
             pow(std::abs(this->sepalWidth - flower.sepalWidth), 2) +
             pow(std::abs(this->petalLength - flower.petalLength), 2) +
             pow(std::abs(this->petalWidth - flower.petalWidth), 2), 0.5);
 }
 
-double Flower::manhattanDisTo(Flower flower) const {
+double Flower::manhattanDisTo(const Flower& flower) const {
     return std::abs(this->sepalLength - flower.sepalLength) +
             std::abs(this->sepalWidth - flower.sepalWidth) +
             std::abs(this->petalLength - flower.petalLength) +
             std::abs(this->petalWidth - flower.petalWidth);
 }
 
-double Flower::chebyshevDisTo(Flower flower) const {
+double Flower::chebyshevDisTo(const Flower& flower) const {
     double max1 = std::max(std::abs(this->sepalLength - flower.sepalLength),
                         std::abs(this->sepalWidth - flower.sepalWidth));
     double max2 = std::max(std::abs(this->petalLength - flower.petalLength),
@@ -80,7 +80,7 @@ double Flower::chebyshevDisTo(Flower flower) const {
     return std::max(max1, max2);
 }
 
-void Flower::classifyFlower(std::vector<Flower> cFlowers, int k, double (Flower::*distance)(Flower)) {
+void Flower::classifyFlower(std::vector<Flower> cFlowers, const int k, const double (Flower::*distance)(Flower)) {
     for (int i = 0; i < cFlowers.size(); i++) {
         for (int j = i + 1; j < cFlowers.size(); j++) {
             if ((this->*distance)(cFlowers[i]) > (this->*distance)(cFlowers[j])) {

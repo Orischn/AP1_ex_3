@@ -10,7 +10,7 @@
  * Input: a path to a file.
  * Output: a pointer to an array with the data in the file in the format of a Flower.
  */
-std::vector<Flower> file::getDataFromFile(std::string path) {
+std::vector<Flower> file::getDataFromFile(const std::string& path) {
     std::ifstream input;
     std::string line;
     std::vector<Flower> flowers;
@@ -31,7 +31,7 @@ std::vector<Flower> file::getDataFromFile(std::string path) {
     return flowers;
 }
 
-void file::writeDataToFile(const std::vector<Flower>& flowers, std::string path) {
+void file::writeDataToFile(const std::vector<Flower>& flowers, const std::string& path) {
     std::ofstream output;
     output.open(path);
     for (Flower flower : flowers) {
