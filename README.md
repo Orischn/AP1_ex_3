@@ -7,9 +7,13 @@ Firstly, we sorted the flowers array using the given distance method that was gi
 Then, we counted the amount of times that each type of the first k flowers in the sorted array appeared.
 We set the type of unclassified flower as the most appeared type from above, which made the flower classified.
 
-To compile the project use the following command:
+To compile the server use the following command **from the project path**:
 
-g++ -IsocketHandling serverSide/*.cpp socketHandling/sock.cpp -o server.exe -std=c++11 && g++ -IsocketHandling clientSide/*.cpp socketHandling/sock.cpp -o client.exe -std=c++11
+g++ -I headerFiles serverSide/*.cpp *.cpp -std=c++11 -o server.exe
+
+To compile the client use the following command **from the project path**:
+
+g++ -I headerFiles clientSide/*.cpp *.cpp -std=c++11 -o client.exe
 
 To run the server side use:
 
