@@ -31,11 +31,11 @@ int main(int argc, char** argv) {
         else {
             std::ofstream output;
             output.open("serverSide/tempDataFile.csv");
-            output << unclassifiedData;
+            output<<unclassifiedData;
             output.close();
             std::vector<Flower> unclassifiedFlowers = file::getDataFromFile("serverSide/tempDataFile.csv");
             std::vector<Flower> classifiedFlowers = file::getDataFromFile("serverSide/classified.csv");
-            for (Flower flower : unclassifiedFlowers) {
+            for (Flower& flower : unclassifiedFlowers) {
                 flower.classifyFlower(classifiedFlowers, 3, &Flower::euclidianDisTo);
             }
             file::writeDataToFile(unclassifiedFlowers, "serverSide/tempDataFile.csv");

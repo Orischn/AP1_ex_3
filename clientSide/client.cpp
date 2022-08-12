@@ -1,9 +1,11 @@
 #include <iostream>
 #include <sys/socket.h>
+#include <fstream>
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
 #include "sock.hpp"
+#define BUFFER_SIZE 4096
 
 int main() {
     const char* ip_address = "127.0.0.1";
@@ -13,25 +15,34 @@ int main() {
     if (sock < 0) {
         perror("error creating socket");
     }
-
     sock::connectToServer(sock, ip_address, port);
-    char data_addr[] = "flower stuff";
-    int sent_bytes = send(sock, data_addr, strlen(data_addr), 0);
+    std::ifstream input;
+    input.open("clientSide/unclassified.csv");
+    char unclassifiedData[BUFFER_SIZE];
+    int i = 0;
+    while(!input.eof()) {
+        input.get(unclassifiedData[i++]);
+    }
+    input.close();
+    int sent_bytes = send(sock, unclassifiedData, BUFFER_SIZE, 0);
 
     if (sent_bytes < 0) {
-    // error
+        perror("error sending data");
     }
 
-    char buffer[4096];
-    int read_bytes = recv(sock, buffer, sizeof(buffer), 0);
+    char classifiedData[BUFFER_SIZE];
+    int read_bytes = recv(sock, classifiedData, BUFFER_SIZE, 0);
     if (read_bytes == 0) {
-    // connection is closed
+        perror("connection was closed");
     }
     else if (read_bytes < 0) {
-    // error
+        perror("error recieving data");
     }
     else {
-        std::cout<<buffer<<"\n";
+        std::ofstream output;
+        output.open("clientSide/classified.csv");
+        output<<classifiedData;
+        output.close();
     }
     close(sock);
     return 0;
