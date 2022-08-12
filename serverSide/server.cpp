@@ -11,7 +11,7 @@
 #define SERVER_PORT 1234
 #define BUFFER_SIZE 4096
 
-int main(int argc, char** argv) {
+int main() {
     const int sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock < 0) {
         perror("error creating socket");

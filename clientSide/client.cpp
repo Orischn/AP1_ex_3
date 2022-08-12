@@ -7,7 +7,7 @@
 #include "sock.hpp"
 #define BUFFER_SIZE 4096
 
-int main() {
+int main(int argc, char* argv[]) {
     const char* ip_address = "127.0.0.1";
     const int port = 1234;
 
@@ -17,7 +17,7 @@ int main() {
     }
     sock::connectToServer(sock, ip_address, port);
     std::ifstream input;
-    input.open("clientSide/unclassified.csv");
+    input.open(argv[1]);
     char unclassifiedData[BUFFER_SIZE];
     int i = 0;
     while(!input.eof()) {
@@ -40,7 +40,7 @@ int main() {
     }
     else {
         std::ofstream output;
-        output.open("clientSide/classified.csv");
+        output.open(argv[2]);
         output<<classifiedData;
         output.close();
     }
