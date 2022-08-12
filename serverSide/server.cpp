@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
         else {
             std::ofstream output;
             output.open("serverSide/tempDataFile.csv");
-            output << unclassifiedData << std::endl;
+            output<<unclassifiedData;
             output.close();
             std::vector<Flower> unclassifiedFlowers = file::getDataFromFile("serverSide/tempDataFile.csv");
             std::vector<Flower> classifiedFlowers = file::getDataFromFile("serverSide/classified.csv");
