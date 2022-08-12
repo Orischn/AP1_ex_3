@@ -9,7 +9,7 @@
 
 int main(int argc, char* argv[]) {
     const char* ip_address = "127.0.0.1";
-    const int port = 42069;
+    const int port = 42069; //hehe
 
     int sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock < 0) {

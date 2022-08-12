@@ -8,7 +8,7 @@
 #include "flower.hpp"
 #include "sock.hpp"
 
-#define SERVER_PORT 42069
+#define SERVER_PORT 42069 //hehe
 #define BUFFER_SIZE 240
 
 int main() {
