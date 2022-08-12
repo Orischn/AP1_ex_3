@@ -33,9 +33,6 @@ int main() {
     else {
         std::cout<<buffer<<"\n";
     }
-
     close(sock);
-
-
     return 0;
 }
