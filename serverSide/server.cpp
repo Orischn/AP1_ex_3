@@ -37,7 +37,6 @@ int main(int argc, char** argv) {
             std::vector<Flower> classifiedFlowers = file::getDataFromFile("serverSide/classified.csv");
             for (Flower& flower : unclassifiedFlowers) {
                 flower.classifyFlower(classifiedFlowers, 3, &Flower::euclidianDisTo);
-                std::cout<<flower.getFlowerType()<<std::endl;
             }
             file::writeDataToFile(unclassifiedFlowers, "serverSide/tempDataFile.csv");
         }
