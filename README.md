@@ -45,4 +45,4 @@ To run the server side use:
 
 To run the client side use:
 
-./client.exe
+./client.exe clientSide/unclassified.csv clientSide/classified.csv
