@@ -40,7 +40,7 @@ int main() {
     }
     else {
         std::ofstream output;
-        output.open("classified.csv");
+        output.open("clientSide/classified.csv");
         output<<classifiedData;
         output.close();
     }
