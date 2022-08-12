@@ -1,6 +1,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <fstream>
 #include <sys/socket.h>
 #include <unistd.h>
 #include "file.hpp"
@@ -8,6 +9,7 @@
 #include "sock.hpp"
 
 #define SERVER_PORT 1234
+#define BUFFER_SIZE 4096
 
 int main(int argc, char** argv) {
     const int sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -15,23 +17,41 @@ int main(int argc, char** argv) {
         perror("error creating socket");
     }
     sock::bindSocketToPort(sock, SERVER_PORT);
-    int client_sock = sock::acceptClient(sock);
+    while (true) {
+        int client_sock = sock::acceptClient(sock);
 
-    char buffer[4096];
-    int read_bytes = recv(client_sock, buffer, sizeof(buffer), 0);
-    if (read_bytes == 0) {
-        exit(0);
-    }
-    else if (read_bytes < 0) {
-        perror("error");
-    }
-    else {
-        std::cout<<buffer<<"\n";
-    }
-    char message[] = "success";
-    int sent_bytes = send(client_sock, message, read_bytes, 0);
-    if (sent_bytes < 0) {
-        perror("error sending to client");
+        char unclassifiedData[BUFFER_SIZE];
+        int read_bytes = recv(client_sock, unclassifiedData, sizeof(unclassifiedData), 0);
+        if (read_bytes == 0) {
+            perror("connection was closed");
+        }
+        else if (read_bytes < 0) {
+            perror("error");
+        }
+        else {
+            std::ofstream output;
+            output.open("serverSide/tempDataFile.csv");
+            output << unclassifiedData << std::endl;
+            output.close();
+            std::vector<Flower> unclassifiedFlowers = file::getDataFromFile("serverSide/tempDataFile.csv");
+            std::vector<Flower> classifiedFlowers = file::getDataFromFile("serverSide/classified.csv");
+            for (Flower flower : unclassifiedFlowers) {
+                flower.classifyFlower(classifiedFlowers, 3, &Flower::euclidianDisTo);
+            }
+            file::writeDataToFile(unclassifiedFlowers, "serverSide/tempDataFile.csv");
+        }
+        std::ifstream input;
+        input.open("serverSide/tempDataFile.csv");
+        char classifiedData[BUFFER_SIZE];
+        int i = 0;
+        while (!input.eof()) {
+            input.get(classifiedData[i++]);
+        }
+        int sent_bytes = send(client_sock, classifiedData, read_bytes, 0);
+        if (sent_bytes < 0) {
+            perror("error sending to client");
+        }
+        input.close();
     }
     close(sock);
     return 0;
