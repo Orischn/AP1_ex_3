@@ -9,11 +9,11 @@ We set the type of unclassified flower as the most appeared type from above, whi
 
 To compile the server use the following command **from the project path**:
 
-g++ -I headerFiles serverSide/*.cpp *.cpp -std=c++11 -o server.exe
+g++ -I headerFiles serverSide/*.cpp sock.cpp -std=c++11 -o server.exe
 
 To compile the client use the following command **from the project path**:
 
-g++ -I headerFiles clientSide/*.cpp *.cpp -std=c++11 -o client.exe
+g++ -I headerFiles clientSide/*.cpp sock.cpp -std=c++11 -o client.exe
 
 To run the server side use:
 
