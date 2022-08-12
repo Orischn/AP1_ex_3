@@ -51,7 +51,7 @@ class Flower {
         * Input: An Array of classified flowers, the length of array, 
         * the k number from the KNN algorithm, and a distance function.
         */
-        void classifyFlower(std::vector<Flower> cFlowers, const int k, const double (Flower::*distance)(Flower));
+        void classifyFlower(std::vector<Flower> cFlowers, const int k, double (Flower::*distance)(const Flower&) const);
 };
 
 #endif
