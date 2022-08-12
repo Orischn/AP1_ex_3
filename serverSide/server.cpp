@@ -52,6 +52,7 @@ int main(int argc, char** argv) {
             perror("error sending to client");
         }
         input.close();
+        remove("serverSide/tempDataFile.csv");
     }
     close(sock);
     return 0;
