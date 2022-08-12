@@ -80,7 +80,7 @@ double Flower::chebyshevDisTo(const Flower& flower) const {
     return std::max(max1, max2);
 }
 
-void Flower::classifyFlower(std::vector<Flower> cFlowers, const int k, const double (Flower::*distance)(Flower)) {
+void Flower::classifyFlower(std::vector<Flower> cFlowers, const int k, double (Flower::*distance)(const Flower&) const) {
     for (int i = 0; i < cFlowers.size(); i++) {
         for (int j = i + 1; j < cFlowers.size(); j++) {
             if ((this->*distance)(cFlowers[i]) > (this->*distance)(cFlowers[j])) {
