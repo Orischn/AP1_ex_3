@@ -9,7 +9,7 @@
 #include "sock.hpp"
 
 #define SERVER_PORT 42069 //hehe
-#define BUFFER_SIZE 240
+#define BUFFER_SIZE 512
 
 int main() {
     const int sock = socket(AF_INET, SOCK_STREAM, 0);

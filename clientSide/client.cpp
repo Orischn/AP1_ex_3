@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <string.h>
 #include "sock.hpp"
-#define BUFFER_SIZE 240
+#define BUFFER_SIZE 512
 
 int main(int argc, char* argv[]) {
     const char* ip_address = "127.0.0.1";

@@ -18,16 +18,17 @@ std::vector<Flower> file::getDataFromFile(const std::string& path) {
     while(getline(input, line)) {
         Flower flower;
         flower.setSepalWidth(stod(line.substr(0, line.find(','))));
-        line = line.substr(line.find(',') + 1, line.length());
+        line = line.substr(line.find(',') + 1, line.length() - line.find(',') - 1);
         flower.setSepalLength(stod(line.substr(0, line.find(','))));
-        line = line.substr(line.find(',') + 1, line.length());
+        line = line.substr(line.find(',') + 1, line.length() - line.find(',') - 1);
         flower.setPetalWidth(stod(line.substr(0, line.find(','))));
-        line = line.substr(line.find(',') + 1, line.length());
+        line = line.substr(line.find(',') + 1, line.length() - line.find(',') - 1);
         flower.setPetalLength(stod(line.substr(0, line.find(','))));
-        line = line.substr(line.find(',') + 1, line.length());
+        line = line.substr(line.find(',') + 1, line.length() - line.find(',') - 1);
         flower.setFlowerType(line);
         flowers.push_back(flower);
     }
+    input.close();
     return flowers;
 }
 
@@ -37,4 +38,5 @@ void file::writeDataToFile(const std::vector<Flower>& flowers, const std::string
     for (Flower flower : flowers) {
         output<<flower.getFlowerType()<<std::endl;
     }
+    output.close();
 }
