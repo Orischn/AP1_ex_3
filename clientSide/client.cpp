@@ -13,6 +13,7 @@ Client::Client() {
     this->sock = socket(AF_INET, SOCK_STREAM, 0);
     if (this->sock < 0) {
         perror("error creating socket");
+        exit(1);
     }
 }
 
@@ -29,6 +30,7 @@ void Client::connectToServer(const char* ip, int port) {
     if (connect(this->sock, (struct sockaddr *) &sin, sizeof(sin)) < 0) {
         close(this->sock);
         perror("error connecting to server");
+        exit(1);
     }
 }
 
@@ -45,6 +47,7 @@ void Client::sendData(char* inputPath) {
     if (sent < 0) {
         close(this->sock);
         perror("error sending data");
+        exit(1);
     }
 }
 
@@ -54,6 +57,7 @@ void Client::handleResponse(char* outputPath) {
     if (read_bytes < 0) {
         close(this->sock);
         perror("error recieving data");
+        exit(1);
     }
     else {
         std::ofstream output;

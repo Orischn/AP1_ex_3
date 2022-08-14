@@ -16,6 +16,7 @@ Server::Server(int port) {
     this->server = socket(AF_INET, SOCK_STREAM, 0);
     if (this->server < 0) {
         perror("error creating socket");
+        exit(1);
     }
     this->bindToPort(port);
 }
@@ -33,10 +34,12 @@ void Server::bindToPort(int port) {
     if (bind(this->server, (struct sockaddr *) &sin, sizeof(sin)) < 0) {
         close(this->server);
         perror("error binding socket");
+        exit(1);
     }
     if (listen(this->server, 5) < 0) {
         close(this->server);
         perror("error listening to a socket");
+        exit(1);
     }
 }
 
@@ -47,6 +50,7 @@ void Server::acceptClient() {
     if (subServer < 0) {
         close(this->server);
         perror("error accepting client");
+        return;
     }
     handleDataFromClient(subServer);
 }
