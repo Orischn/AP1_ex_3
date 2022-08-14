@@ -1,6 +1,7 @@
 #include <vector>
 #include <string.h>
 #include <fstream>
+#include <iostream>
 #include <sys/socket.h>
 #include <unistd.h>
 #include <netinet/in.h>
@@ -30,9 +31,11 @@ void Server::bindToPort(int port) {
     sin.sin_addr.s_addr = INADDR_ANY;
     sin.sin_port = htons(port);
     if (bind(this->server, (struct sockaddr *) &sin, sizeof(sin)) < 0) {
+        close(this->server);
         perror("error binding socket");
     }
     if (listen(this->server, 5) < 0) {
+        close(this->server);
         perror("error listening to a socket");
     }
 }
@@ -42,6 +45,7 @@ void Server::acceptClient() {
     unsigned int addr_len = sizeof(client_sin);
     int subServer = accept(this->server,  (struct sockaddr *) &client_sin,  &addr_len);
     if (subServer < 0) {
+        close(this->server);
         perror("error accepting client");
     }
     handleDataFromClient(subServer);
@@ -56,7 +60,9 @@ void Server::handleDataFromClient(int sock) {
             return;
         }
         else if (read_bytes < 0) {
-            perror("error");
+            close(sock);
+            std::cout<<"error receiving from client";
+            return;
         }
         else {
             std::ofstream output;
@@ -76,12 +82,14 @@ void Server::handleDataFromClient(int sock) {
             while (!input.eof()) {
                 input.get(classifiedData[i++]);
             }
-            int sent_bytes = send(sock, classifiedData, BUFFER_SIZE, 0);
-            if (sent_bytes < 0) {
-                perror("error sending to client");
-            }
             input.close();
             remove("serverSide/tempDataFile.csv");
+            int sent_bytes = send(sock, classifiedData, BUFFER_SIZE, 0);
+            if (sent_bytes < 0) {
+                close(sock);
+                std::cout<<"error sending to client";
+                return;
+            }
         }
     }
 }

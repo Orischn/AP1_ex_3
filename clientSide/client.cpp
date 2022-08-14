@@ -27,6 +27,7 @@ void Client::connectToServer(const char* ip, int port) {
     sin.sin_addr.s_addr = inet_addr(ip);
     sin.sin_port = htons(port);
     if (connect(this->sock, (struct sockaddr *) &sin, sizeof(sin)) < 0) {
+        close(this->sock);
         perror("error connecting to server");
     }
 }
@@ -42,6 +43,7 @@ void Client::sendData(char* inputPath) {
     input.close();
     int sent = send(this->sock, unclassifiedData, BUFFER_SIZE, 0);
     if (sent < 0) {
+        close(this->sock);
         perror("error sending data");
     }
 }
@@ -49,10 +51,8 @@ void Client::sendData(char* inputPath) {
 void Client::handleResponse(char* outputPath) {
     char classifiedData[BUFFER_SIZE];
     int read_bytes = recv(this->sock, classifiedData, BUFFER_SIZE, 0);
-    if (read_bytes == 0) {
-        perror("connection was closed");
-    }
     else if (read_bytes < 0) {
+        close(this->sock);
         perror("error recieving data");
     }
     else {
