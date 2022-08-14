@@ -51,7 +51,7 @@ void Client::sendData(char* inputPath) {
 void Client::handleResponse(char* outputPath) {
     char classifiedData[BUFFER_SIZE];
     int read_bytes = recv(this->sock, classifiedData, BUFFER_SIZE, 0);
-    else if (read_bytes < 0) {
+    if (read_bytes < 0) {
         close(this->sock);
         perror("error recieving data");
     }
