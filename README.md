@@ -31,18 +31,14 @@ We used a 30 seconds timeout length.
 We used a buffer size of 240 characters, which translates into 240 bytes, like the size of the given unclassified flowers file.
 
 
-To compile the server use the following command **from the project path**:
+To compile the code use the following command **from the project path**:
 
-g++ -I headerFiles serverSide/*.cpp -std=c++11 -o server.exe
-
-To compile the client use the following command **from the project path**:
-
-g++ -I headerFiles clientSide/*.cpp -std=c++11 -o client.exe
+make compile_code
 
 To run the server side use:
 
-./server.exe
+make run_server
 
-To run the client side use:
+To run the client side use from a different terminal:
 
-./client.exe clientSide/unclassified.csv clientSide/classified.csv
+make run_client
