@@ -1,6 +1,5 @@
 compile_code:
 	@echo "Compiling code..."
-	@cd 
 	@g++ -I headerFiles serverSide/*.cpp -std=c++11 -o server.exe
 	@g++ -I headerFiles clientSide/*.cpp -std=c++11 -o client.exe
 run_server:
