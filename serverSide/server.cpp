@@ -1,29 +1,59 @@
 #include <vector>
-#include <string>
-#include <iostream>
+#include <string.h>
 #include <fstream>
 #include <sys/socket.h>
 #include <unistd.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 #include "file.hpp"
 #include "flower.hpp"
-#include "sock.hpp"
+#include "server.hpp"
 
-#define SERVER_PORT 42069 //hehe
 #define BUFFER_SIZE 512
 
-int main() {
-    const int sock = socket(AF_INET, SOCK_STREAM, 0);
-    if (sock < 0) {
+Server::Server(int port) {
+    this->server = socket(AF_INET, SOCK_STREAM, 0);
+    if (this->server < 0) {
         perror("error creating socket");
     }
-    sock::bindSocketToPort(sock, SERVER_PORT);
-    while (true) {
-        int client_sock = sock::acceptClient(sock);
+    this->bindToPort(port);
+}
 
+Server::~Server() {
+    close(this->server);
+}
+
+void Server::bindToPort(int port) {
+    struct sockaddr_in sin;
+    memset(&sin, 0, sizeof(sin));
+    sin.sin_family = AF_INET;
+    sin.sin_addr.s_addr = INADDR_ANY;
+    sin.sin_port = htons(port);
+    if (bind(this->server, (struct sockaddr *) &sin, sizeof(sin)) < 0) {
+        perror("error binding socket");
+    }
+    if (listen(this->server, 5) < 0) {
+        perror("error listening to a socket");
+    }
+}
+
+void Server::acceptClient() {
+    struct sockaddr_in client_sin;
+    unsigned int addr_len = sizeof(client_sin);
+    int subServer = accept(this->server,  (struct sockaddr *) &client_sin,  &addr_len);
+    if (subServer < 0) {
+        perror("error accepting client");
+    }
+    handleDataFromClient(subServer);
+}
+
+void Server::handleDataFromClient(int sock) {
+    while(true) {
         char unclassifiedData[BUFFER_SIZE];
-        int read_bytes = recv(client_sock, unclassifiedData, sizeof(unclassifiedData), 0);
+        int read_bytes = recv(sock, unclassifiedData, sizeof(unclassifiedData), 0);
         if (read_bytes == 0) {
-            perror("connection was closed");
+            close(sock);
+            return;
         }
         else if (read_bytes < 0) {
             perror("error");
@@ -39,21 +69,19 @@ int main() {
                 flower.classifyFlower(classifiedFlowers, 3, &Flower::euclidianDisTo);
             }
             file::writeDataToFile(unclassifiedFlowers, "serverSide/tempDataFile.csv");
+            std::ifstream input;
+            input.open("serverSide/tempDataFile.csv");
+            char classifiedData[BUFFER_SIZE];
+            int i = 0;
+            while (!input.eof()) {
+                input.get(classifiedData[i++]);
+            }
+            int sent_bytes = send(sock, classifiedData, BUFFER_SIZE, 0);
+            if (sent_bytes < 0) {
+                perror("error sending to client");
+            }
+            input.close();
+            remove("serverSide/tempDataFile.csv");
         }
-        std::ifstream input;
-        input.open("serverSide/tempDataFile.csv");
-        char classifiedData[BUFFER_SIZE];
-        int i = 0;
-        while (!input.eof()) {
-            input.get(classifiedData[i++]);
-        }
-        int sent_bytes = send(client_sock, classifiedData, read_bytes, 0);
-        if (sent_bytes < 0) {
-            perror("error sending to client");
-        }
-        input.close();
-        remove("serverSide/tempDataFile.csv");
     }
-    close(sock);
-    return 0;
 }
