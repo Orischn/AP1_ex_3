@@ -11,6 +11,8 @@
 #include "server.hpp"
 
 #define BUFFER_SIZE 512
+#define TEMP_FILE_PATH "serverSide/tempDataFile.csv"
+#define CLASSIFIED_FILE_PATH "serverSide/classified.csv"
 
 Server::Server(int port) {
     this->server = socket(AF_INET, SOCK_STREAM, 0);
@@ -69,25 +71,26 @@ void Server::handleDataFromClient(int sock) {
             return;
         }
         else {
+            std::vector<Flower> classifiedFlowers = file::getDataFromFile(CLASSIFIED_FILE_PATH);
             std::ofstream output;
-            output.open("serverSide/tempDataFile.csv");
+            output.open(TEMP_FILE_PATH);
             output<<unclassifiedData;
             output.close();
-            std::vector<Flower> unclassifiedFlowers = file::getDataFromFile("serverSide/tempDataFile.csv");
-            std::vector<Flower> classifiedFlowers = file::getDataFromFile("serverSide/classified.csv");
+            std::vector<Flower> unclassifiedFlowers = file::getDataFromFile(TEMP_FILE_PATH);
+            remove(TEMP_FILE_PATH);
             for (Flower& flower : unclassifiedFlowers) {
                 flower.classifyFlower(classifiedFlowers, 3, &Flower::euclidianDisTo);
             }
-            file::writeDataToFile(unclassifiedFlowers, "serverSide/tempDataFile.csv");
+            file::writeDataToFile(unclassifiedFlowers, TEMP_FILE_PATH);
             std::ifstream input;
-            input.open("serverSide/tempDataFile.csv");
+            input.open(TEMP_FILE_PATH);
             char classifiedData[BUFFER_SIZE];
             int i = 0;
             while (!input.eof()) {
                 input.get(classifiedData[i++]);
             }
             input.close();
-            remove("serverSide/tempDataFile.csv");
+            remove(TEMP_FILE_PATH);
             int sent_bytes = send(sock, classifiedData, BUFFER_SIZE, 0);
             if (sent_bytes < 0) {
                 close(sock);
