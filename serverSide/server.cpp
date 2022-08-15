@@ -72,13 +72,12 @@ void Server::handleDataFromClient(int sock) {
         else {
             Flower flower;
             flower.setSepalWidth(std::stod(strtok(unclassifiedData, ",")));
-            flower.setSepalLength(std::stod(strtok(unclassifiedData, ",")));
-            flower.setPetalWidth(std::stod(strtok(unclassifiedData, ",")));
-            flower.setPetalLength(std::stod(strtok(unclassifiedData, ",")));
+            flower.setSepalLength(std::stod(strtok(NULL, ",")));
+            flower.setPetalWidth(std::stod(strtok(NULL, ",")));
+            flower.setPetalLength(std::stod(strtok(NULL, ",")));
             std::vector<Flower> classifiedFlowers = file::getDataFromFile("serverSide/classified.csv");
             flower.classifyFlower(classifiedFlowers, 3, &Flower::euclidianDisTo);
             char classifiedData[BUFFER_SIZE];
-            int i = 0;
             strcpy(classifiedData, flower.getFlowerType().c_str());
             int sent_bytes = send(sock, classifiedData, BUFFER_SIZE, 0);
             if (sent_bytes < 0) {

@@ -6,6 +6,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <string.h>
+#include <vector>
 #include "client.hpp"
 
 #define BUFFER_SIZE 512
@@ -47,15 +48,19 @@ void Client::sendData(const char* data) {
 void Client::handleResponse(char* outputPath) {
     char classifiedData[BUFFER_SIZE];
     int read_bytes = recv(this->sock, classifiedData, BUFFER_SIZE, 0);
-    if (read_bytes < 0) {
+    if (read_bytes = 0) {
+        perror("test");
+        return;
+    }
+    else if (read_bytes < 0) {
         close(this->sock);
         perror("error recieving data");
         exit(1);
     }
     else {
         std::ofstream output;
-        output.open(outputPath, std::ofstream::app | std::ofstream::out);
-        output<<classifiedData;
+        output.open(outputPath, std::ofstream::app);
+        output<<classifiedData<<"\n";
         output.close();
     }
 }
@@ -64,9 +69,13 @@ void Client::handleData(char* inputPath, char* outputPath) {
     std::ifstream input;
     input.open(inputPath);
     std::string unclassifiedData;
-    while(!getline(input, unclassifiedData)) {
-        this->sendData(unclassifiedData.c_str());
-        this->handleResponse(outputPath);
+    std::vector<std::string> lines;
+    while(getline(input, unclassifiedData)) {
+        lines.push_back(unclassifiedData);
     }
     input.close();
+    for (std::string line : lines) {
+        this->sendData(line.c_str());
+        this->handleResponse(outputPath);
+    }
 }
