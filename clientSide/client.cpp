@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include <fstream>
 #include <sys/socket.h>
 #include <unistd.h>
@@ -34,21 +35,13 @@ void Client::connectToServer(const char* ip, int port) {
     }
 }
 
-void Client::sendData(char* inputPath) {
-    std::ifstream input;
-    input.open(inputPath);
-    char unclassifiedData[BUFFER_SIZE];
-    int i = 0;
-    while(!input.eof()) {
-        input.get(unclassifiedData[i++]);
-    }
-    input.close();
-    int sent = send(this->sock, unclassifiedData, BUFFER_SIZE, 0);
+void Client::sendData(const char* data) {
+    int sent = send(this->sock, data, BUFFER_SIZE, 0);
     if (sent < 0) {
         close(this->sock);
         perror("error sending data");
         exit(1);
-    }
+    }    
 }
 
 void Client::handleResponse(char* outputPath) {
@@ -61,8 +54,19 @@ void Client::handleResponse(char* outputPath) {
     }
     else {
         std::ofstream output;
-        output.open(outputPath);
+        output.open(outputPath, std::ofstream::app | std::ofstream::out);
         output<<classifiedData;
         output.close();
     }
+}
+
+void Client::handleData(char* inputPath, char* outputPath) {
+    std::ifstream input;
+    input.open(inputPath);
+    std::string unclassifiedData;
+    while(!getline(input, unclassifiedData)) {
+        this->sendData(unclassifiedData.c_str());
+        this->handleResponse(outputPath);
+    }
+    input.close();
 }
