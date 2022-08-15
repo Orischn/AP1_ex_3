@@ -26,19 +26,19 @@ Eventually, on the client side, we wrote the received data into the given output
 
 We used port number 42069 (because it's a cool number).
 
-We used a 30 seconds timeout length.
+We used a 10 seconds timeout length.
 
 We used a buffer size of 240 characters, which translates into 240 bytes, like the size of the given unclassified flowers file.
 
 
-To compile the code use the following command **from the project path**:
+To **compile** the code use the following command **from the project path**:
 
 make compile_code
 
-To run the server side use:
+To **run** the **server** side use:
 
 make run_server
 
-To run the client side use from a different terminal:
+To **run** the **client** side use from a **different terminal**:
 
 make run_client
