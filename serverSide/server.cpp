@@ -38,7 +38,7 @@ void Server::bindToPort(int port) {
         perror("error binding socket");
         exit(1);
     }
-    if (listen(this->server, 5) < 0) {
+    if (listen(this->server, 10) < 0) {
         close(this->server);
         perror("error listening to a socket");
         exit(1);
