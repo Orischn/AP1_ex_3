@@ -1,4 +1,4 @@
-compile_code:
+compile:
 	@echo "Compiling code..."
 	@g++ -I headerFiles serverSide/*.cpp -std=c++11 -o server.exe
 	@g++ -I headerFiles clientSide/*.cpp -std=c++11 -o client.exe

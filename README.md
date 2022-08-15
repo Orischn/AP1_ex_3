@@ -33,7 +33,7 @@ We used a buffer size of 240 characters, which translates into 240 bytes, like t
 
 To **compile** the code use the following command **from the project path**:
 
-make compile_code
+make compile
 
 To **run** the **server** side use:
 
