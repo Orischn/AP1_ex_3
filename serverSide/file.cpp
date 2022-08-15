@@ -1,5 +1,6 @@
 #include <fstream>
 #include <string>
+#include <string.h>
 #include <vector>
 #include "file.hpp"
 #include "flower.hpp"
@@ -17,15 +18,12 @@ std::vector<Flower> file::getDataFromFile(const std::string& path) {
     input.open(path);
     while(getline(input, line)) {
         Flower flower;
-        flower.setSepalWidth(stod(line.substr(0, line.find(','))));
-        line = line.substr(line.find(',') + 1, line.length() - line.find(',') - 1);
-        flower.setSepalLength(stod(line.substr(0, line.find(','))));
-        line = line.substr(line.find(',') + 1, line.length() - line.find(',') - 1);
-        flower.setPetalWidth(stod(line.substr(0, line.find(','))));
-        line = line.substr(line.find(',') + 1, line.length() - line.find(',') - 1);
-        flower.setPetalLength(stod(line.substr(0, line.find(','))));
-        line = line.substr(line.find(',') + 1, line.length() - line.find(',') - 1);
-        flower.setFlowerType(line);
+        char* flowerData = strdup(line.c_str());
+        flower.setSepalWidth(std::stod(strtok(flowerData, ",")));
+        flower.setSepalLength(std::stod(strtok(NULL, ",")));
+        flower.setPetalWidth(std::stod(strtok(NULL, ",")));
+        flower.setPetalLength(std::stod(strtok(NULL, ",")));
+        flower.setFlowerType(strtok(NULL, ","));
         flowers.push_back(flower);
     }
     input.close();
