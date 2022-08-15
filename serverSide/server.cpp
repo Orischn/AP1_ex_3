@@ -1,6 +1,5 @@
 #include <vector>
 #include <string.h>
-#include <string>
 #include <fstream>
 #include <iostream>
 #include <sys/socket.h>
@@ -70,15 +69,25 @@ void Server::handleDataFromClient(int sock) {
             return;
         }
         else {
-            Flower flower;
-            flower.setSepalWidth(std::stod(strtok(unclassifiedData, ",")));
-            flower.setSepalLength(std::stod(strtok(NULL, ",")));
-            flower.setPetalWidth(std::stod(strtok(NULL, ",")));
-            flower.setPetalLength(std::stod(strtok(NULL, ",")));
+            std::ofstream output;
+            output.open("serverSide/tempDataFile.csv");
+            output<<unclassifiedData;
+            output.close();
+            std::vector<Flower> unclassifiedFlowers = file::getDataFromFile("serverSide/tempDataFile.csv");
             std::vector<Flower> classifiedFlowers = file::getDataFromFile("serverSide/classified.csv");
-            flower.classifyFlower(classifiedFlowers, 3, &Flower::euclidianDisTo);
+            for (Flower& flower : unclassifiedFlowers) {
+                flower.classifyFlower(classifiedFlowers, 3, &Flower::euclidianDisTo);
+            }
+            file::writeDataToFile(unclassifiedFlowers, "serverSide/tempDataFile.csv");
+            std::ifstream input;
+            input.open("serverSide/tempDataFile.csv");
             char classifiedData[BUFFER_SIZE];
-            strcpy(classifiedData, flower.getFlowerType().c_str());
+            int i = 0;
+            while (!input.eof()) {
+                input.get(classifiedData[i++]);
+            }
+            input.close();
+            remove("serverSide/tempDataFile.csv");
             int sent_bytes = send(sock, classifiedData, BUFFER_SIZE, 0);
             if (sent_bytes < 0) {
                 close(sock);

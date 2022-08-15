@@ -5,7 +5,6 @@ class Client {
         Client();
         ~Client();
         void connectToServer(const char* ip, const int port);
-        void sendData(const char* data);
+        void sendData(char* inputPath);
         void handleResponse(char* outputPath);
-        void handleData(char* inputPath, char* outputPath);
 };

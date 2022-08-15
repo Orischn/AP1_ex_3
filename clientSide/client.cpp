@@ -1,12 +1,10 @@
 #include <iostream>
-#include <string>
 #include <fstream>
 #include <sys/socket.h>
 #include <unistd.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <string.h>
-#include <vector>
 #include "client.hpp"
 
 #define BUFFER_SIZE 512
@@ -36,46 +34,35 @@ void Client::connectToServer(const char* ip, int port) {
     }
 }
 
-void Client::sendData(const char* data) {
-    int sent = send(this->sock, data, BUFFER_SIZE, 0);
+void Client::sendData(char* inputPath) {
+    std::ifstream input;
+    input.open(inputPath);
+    char unclassifiedData[BUFFER_SIZE];
+    int i = 0;
+    while(!input.eof()) {
+        input.get(unclassifiedData[i++]);
+    }
+    input.close();
+    int sent = send(this->sock, unclassifiedData, BUFFER_SIZE, 0);
     if (sent < 0) {
         close(this->sock);
         perror("error sending data");
         exit(1);
-    }    
+    }
 }
 
 void Client::handleResponse(char* outputPath) {
     char classifiedData[BUFFER_SIZE];
     int read_bytes = recv(this->sock, classifiedData, BUFFER_SIZE, 0);
-    if (read_bytes = 0) {
-        perror("test");
-        return;
-    }
-    else if (read_bytes < 0) {
+    if (read_bytes < 0) {
         close(this->sock);
         perror("error recieving data");
         exit(1);
     }
     else {
         std::ofstream output;
-        output.open(outputPath, std::ofstream::app);
-        output<<classifiedData<<"\n";
+        output.open(outputPath);
+        output<<classifiedData;
         output.close();
-    }
-}
-
-void Client::handleData(char* inputPath, char* outputPath) {
-    std::ifstream input;
-    input.open(inputPath);
-    std::string unclassifiedData;
-    std::vector<std::string> lines;
-    while(getline(input, unclassifiedData)) {
-        lines.push_back(unclassifiedData);
-    }
-    input.close();
-    for (std::string line : lines) {
-        this->sendData(line.c_str());
-        this->handleResponse(outputPath);
     }
 }
