@@ -1,3 +1,6 @@
+#ifndef EX_3_HEADERFILES_SERVER_H
+#define EX_3_HEADERFILES_SERVER_H
+
 class Server {
     private:
         int server;
@@ -8,3 +11,5 @@ class Server {
         ~Server();
         void acceptClient();
 };
+
+#endif

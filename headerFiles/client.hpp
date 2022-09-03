@@ -1,3 +1,6 @@
+#ifndef EX_3_HEADERFILES_CLIENT_H
+#define EX_3_HEADERFILES_CLIENT_H
+
 class Client {
     private:
         int sock;
@@ -8,3 +11,5 @@ class Client {
         void sendData(char* inputPath);
         void handleResponse(char* outputPath);
 };
+
+#endif
