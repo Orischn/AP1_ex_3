@@ -4,11 +4,17 @@
 #include "uploadCommand.hpp"
 #include "settingsCommand.hpp"
 #include "classifyCommand.hpp"
+#include "displayCommand.hpp"
+#include "downloadCommand.hpp"
+#include "matrixCommand.hpp"
 
 CLI::CLI() {
 	commands.push_back(new UploadFileCMD());
 	commands.push_back(new AlgoSettingsCMD());
 	commands.push_back(new ClassifyDataCMD());
+	commands.push_back(new DisplayResultsCMD());
+	commands.push_back(new DownloadResultsCMD());
+	commands.push_back(new AlgorithmConfusionMatrixCMD());
 }
 void CLI::start() {
 	DefaultIO* dio = new StandardIO();
