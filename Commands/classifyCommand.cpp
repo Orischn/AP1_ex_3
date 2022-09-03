@@ -1,5 +1,7 @@
 #include "classifyCommand.hpp"
 
 ClassifyDataCMD::ClassifyDataCMD() {
-    description = "classify data";
+    this->description = "classify data";
 }
+
+void ClassifyDataCMD::execute() {}

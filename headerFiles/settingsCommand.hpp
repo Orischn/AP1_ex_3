@@ -4,4 +4,4 @@ class AlgoSettingsCMD : public Command {
     public:
         AlgoSettingsCMD();
         void execute() override;
-}
+};

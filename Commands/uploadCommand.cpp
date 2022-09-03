@@ -1,5 +1,7 @@
 #include "uploadCommand.hpp"
 
 UploadFileCMD::UploadFileCMD() {
-    description = "upload an unclassifed csv data file"
+    this->description = "upload an unclassifed csv data file";
 }
+
+void UploadFileCMD::execute() {}

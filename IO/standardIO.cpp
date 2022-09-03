@@ -8,5 +8,5 @@ std::string StandardIO::read() {
 }
 
 void StandardIO::write(std::string output) {
-    std::cout<<output<<endl;
+    std::cout<<output<<std::endl;
 }

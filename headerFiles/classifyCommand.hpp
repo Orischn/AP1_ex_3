@@ -4,4 +4,4 @@ class ClassifyDataCMD : public Command {
     public:
         ClassifyDataCMD();
         void execute() override;
-}
+};

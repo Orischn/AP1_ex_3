@@ -1,5 +1,7 @@
 #include "settingsCommand.hpp"
 
 AlgoSettingsCMD::AlgoSettingsCMD() {
-    description = "algorithm settings";
+    this->description = "algorithm settings";
 }
+
+void AlgoSettingsCMD::execute() {}
