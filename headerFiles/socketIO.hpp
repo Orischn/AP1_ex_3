@@ -3,6 +3,6 @@
 
 #include "defaultIO.hpp"
 
-class SocketIO :: public DefaultIO{
+class SocketIO : public DefaultIO{
 
 };

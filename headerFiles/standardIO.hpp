@@ -3,6 +3,6 @@
 
 #include "defaultIO.hpp"
 
-class StandardIO :: public DefaultIO{
+class StandardIO : public DefaultIO{
 
 };

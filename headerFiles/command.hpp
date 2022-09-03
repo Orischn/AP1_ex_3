@@ -4,7 +4,7 @@
 #include <string>
 #include "defaultIO.hpp"
 
-class Command {
+class Command : public DefaultIO{
     public:
         std::string description;
         DefaultIO dio;
