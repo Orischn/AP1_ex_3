@@ -6,7 +6,6 @@
 #include <unistd.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include "file.hpp"
 #include "flower.hpp"
 #include "server.hpp"
 
@@ -70,33 +69,33 @@ void Server::handleDataFromClient(int sock) {
             std::cout<<"error receiving from client";
             return;
         }
-        else {
-            std::vector<Flower> classifiedFlowers = file::getDataFromFile(CLASSIFIED_FILE_PATH);
-            std::ofstream output;
-            output.open(TEMP_FILE_PATH);
-            output<<unclassifiedData;
-            output.close();
-            std::vector<Flower> unclassifiedFlowers = file::getDataFromFile(TEMP_FILE_PATH);
-            remove(TEMP_FILE_PATH);
-            for (Flower& flower : unclassifiedFlowers) {
-                flower.classifyFlower(classifiedFlowers, 3, &Flower::euclidianDisTo);
-            }
-            file::writeDataToFile(unclassifiedFlowers, TEMP_FILE_PATH);
-            std::ifstream input;
-            input.open(TEMP_FILE_PATH);
-            char classifiedData[BUFFER_SIZE];
-            int i = 0;
-            while (!input.eof()) {
-                input.get(classifiedData[i++]);
-            }
-            input.close();
-            remove(TEMP_FILE_PATH);
-            int sent_bytes = send(sock, classifiedData, BUFFER_SIZE, 0);
-            if (sent_bytes < 0) {
-                close(sock);
-                std::cout<<"error sending to client";
-                return;
-            }
-        }
+        // else {
+        //     std::vector<Flower> classifiedFlowers = file::getDataFromFile(CLASSIFIED_FILE_PATH);
+        //     std::ofstream output;
+        //     output.open(TEMP_FILE_PATH);
+        //     output<<unclassifiedData;
+        //     output.close();
+        //     std::vector<Flower> unclassifiedFlowers = file::getDataFromFile(TEMP_FILE_PATH);
+        //     remove(TEMP_FILE_PATH);
+        //     for (Flower& flower : unclassifiedFlowers) {
+        //         flower.classifyFlower(classifiedFlowers, 3, &Flower::euclidianDisTo);
+        //     }
+        //     file::writeDataToFile(unclassifiedFlowers, TEMP_FILE_PATH);
+        //     std::ifstream input;
+        //     input.open(TEMP_FILE_PATH);
+        //     char classifiedData[BUFFER_SIZE];
+        //     int i = 0;
+        //     while (!input.eof()) {
+        //         input.get(classifiedData[i++]);
+        //     }
+        //     input.close();
+        //     remove(TEMP_FILE_PATH);
+        //     int sent_bytes = send(sock, classifiedData, BUFFER_SIZE, 0);
+        //     if (sent_bytes < 0) {
+        //         close(sock);
+        //         std::cout<<"error sending to client";
+        //         return;
+        //     }
+        // }
     }
 }
