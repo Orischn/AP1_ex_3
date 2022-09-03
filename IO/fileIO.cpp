@@ -2,6 +2,8 @@
 #include <sstream>
 #include "fileIO.hpp"
 
+FileIO::FileIO() {}
+
 FileIO::FileIO(std::string path) {
     this->path = path;
 }
@@ -16,4 +18,8 @@ std::string FileIO::read() {
 void FileIO::write(std::string text) {
     std::ofstream output(this->path);
     output<<text;
+}
+
+void FileIO::setPath(std::string path) {
+    this->path = path;
 }
