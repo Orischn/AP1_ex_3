@@ -1,7 +1,7 @@
 #include "command.hpp"
 
-class ClassifyData : public Command{
+class ClassifyDataCMD : public Command {
     public:
-        ClassifyData();
-        
+        ClassifyDataCMD();
+        void execute() override;
 }

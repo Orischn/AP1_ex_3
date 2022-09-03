@@ -10,6 +10,7 @@ class CLI{
 private:
     std::vector<Command*> commands;
 public:
+    CLI();
     void start();
  
 };

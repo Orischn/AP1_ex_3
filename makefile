@@ -1,6 +1,6 @@
 compile:
 	@echo "Compiling code..."
-	@g++ -g -I headerFiles serverSide/*.cpp IO/*.cpp -std=c++11 -o server.exe
+	@g++ -g -I headerFiles serverSide/*.cpp IO/*.cpp Commands/*.cpp -std=c++11 -o server.exe
 	@g++ -g -I headerFiles clientSide/*.cpp -std=c++11 -o client.exe
 run_server:
 	@echo "server running..."

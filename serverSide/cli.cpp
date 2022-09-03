@@ -1,12 +1,15 @@
 #include "cli.hpp"
-#include <cmath>
-#include <string>
-#include <vector>
-#include <fstream>
-#include <iostream>
 #include "defaultIO.hpp"
 #include "standardIO.hpp"
+#include "uploadCommand.hpp"
+#include "settingsCommand.hpp"
+#include "classifyCommand.hpp"
 
+CLI::CLI() {
+	commands.push_back(new UploadFileCMD());
+	commands.push_back(new AlgoSettingsCMD());
+	commands.push_back(new ClassifyDataCMD());
+}
 void CLI::start() {
 	DefaultIO* dio = new StandardIO();
 	dio->write("Welcome to the KNN Classifier Server. Please choose an option\n");
