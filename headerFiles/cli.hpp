@@ -4,10 +4,14 @@
 
 #include <string>
 #include "command.hpp"
+#include <vector>
 
-class CLI : public Command{
+class CLI{
+private:
+    std::vector<Command*> commands;
 public:
     void start();
+ 
 };
 
 #endif

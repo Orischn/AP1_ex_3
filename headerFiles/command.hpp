@@ -4,10 +4,10 @@
 #include <string>
 #include "defaultIO.hpp"
 
-class Command : public DefaultIO {
+class Command{
     public:
         std::string description;
-        DefaultIO dio;
+        DefaultIO* dio;
         virtual void execute() = 0;
 };
 
