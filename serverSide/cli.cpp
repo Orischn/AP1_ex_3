@@ -1,6 +1,7 @@
 #include "cli.hpp"
 #include "defaultIO.hpp"
 #include "standardIO.hpp"
+#include "fileIO.hpp"
 #include "uploadCommand.hpp"
 #include "settingsCommand.hpp"
 #include "classifyCommand.hpp"
@@ -11,25 +12,24 @@
 CLI::CLI() {
 	commands.push_back(new UploadFileCMD());
 	commands.push_back(new AlgoSettingsCMD());
-	commands.push_back(new ClassifyDataCMD());
-	commands.push_back(new DisplayResultsCMD());
+	commands.push_back(new ClassifyDataCMD(new FileIO("Commands/output.csv")));
+	commands.push_back(new DisplayResultsCMD(new StandardIO()));
 	commands.push_back(new DownloadResultsCMD());
 	commands.push_back(new AlgorithmConfusionMatrixCMD());
 }
+
 void CLI::start() {
-	DefaultIO* dio = new StandardIO();
-	dio->write("Welcome to the KNN Classifier Server. Please choose an option");
-	for (int i = 0; i < commands.size(); i++) {
-		dio->write(std::to_string(i + 1) +". " + (commands[i]->description));
+	StandardIO sio;
+	while (true) {
+		sio.write("Welcome to the KNN Classifier Server. Please choose an option\n");
+		for (int i = 0; i < commands.size(); i++) {
+			sio.write(std::to_string(i + 1) +". " + (commands[i]->description) + "\n");
+		}
+		int input = std::stoi(sio.read());
+		while (input < 1 || input > 7) {
+			sio.write("Option unavailable! Please try again\n");
+			input = std::stoi(sio.read());
+		}
+		commands[input - 1]->execute();
 	}
-	int input = std::stoi(dio->read());
-	while (input < 1 || input > 7) {
-		dio->write("Option unavailable! Please try again");
-		input = std::stoi(dio->read());
-	}
-	commands[input]->execute();
-	
-
-	
-
 }

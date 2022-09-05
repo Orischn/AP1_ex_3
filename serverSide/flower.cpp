@@ -1,7 +1,9 @@
 #include "flower.hpp"
 #include <cmath>
 #include <string>
+#include <sstream>
 #include <vector>
+#include <iostream>
 
 Flower::Flower() {
     this->sepalWidth = 0;
@@ -117,4 +119,20 @@ void Flower::classifyFlower(std::vector<Flower> cFlowers, const int k, double (F
     } else {
         this->flowerType = "Iris-virginica";
     }
+}
+
+Flower Flower::stof(std::string sFlower) {
+    Flower flower;
+    std::stringstream ssFlower(sFlower);
+    std::vector<std::string> data;
+    std::string parsed;
+    while(getline(ssFlower, parsed, ',')) {
+        data.push_back(parsed);
+    }
+    flower.setSepalWidth(std::stod(data[0]));
+    flower.setSepalLength(std::stod(data[1]));
+    flower.setPetalWidth(std::stod(data[2]));
+    flower.setPetalLength(std::stod(data[3]));
+    flower.setFlowerType(data[data.size() - 1]);
+    return flower;
 }
