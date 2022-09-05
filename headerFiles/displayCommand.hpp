@@ -3,6 +3,6 @@
 
 class DisplayResultsCMD : public Command {
 public:
-    DisplayResultsCMD();
+    DisplayResultsCMD(DefaultIO*);
     void execute() override;
 };
