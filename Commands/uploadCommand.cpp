@@ -8,15 +8,15 @@ UploadFileCMD::UploadFileCMD(DefaultIO* dio) {
 }
 
 void UploadFileCMD::execute() {
-    dio->write("Please upload your local train csv file.");
+    dio->write("Please upload your local train csv file.\n");
     FileIO fio(dio->read());
     std::string data = fio.read();
-    fio.setPath("train.csv");
+    fio.setPath("Commands/train.csv");
     fio.write(data);
 
-    dio->write("Please upload your local test csv file.");
+    dio->write("Please upload your local test csv file.\n");
     fio.setPath(dio->read());
     data = fio.read();
-    fio.setPath("test.csv");
+    fio.setPath("Commands/test.csv");
     fio.write(data);
 }
