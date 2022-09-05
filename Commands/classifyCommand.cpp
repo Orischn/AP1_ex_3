@@ -13,8 +13,12 @@ void ClassifyDataCMD::execute() {
     std::vector<Flower> ucFlowers = getFlowersFromFile("Commands/test.csv");
     for (int i = 1; i <= ucFlowers.size(); i++) {
         ucFlowers[i - 1].classifyFlower(cFlowers, AlgoSettingsCMD::getK(), &Flower::euclidianDisTo);
-        dio->write(ucFlowers[i - 1].getFlowerType());
     }
+    std::string data;
+    for (int i = 0; i < ucFlowers.size(); i++) {
+        data += ucFlowers[i].getFlowerType() + "\n";
+    }
+    dio->write(data);
 }
 
 std::vector<Flower> ClassifyDataCMD::getFlowersFromFile(std::string path) {
