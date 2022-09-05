@@ -2,8 +2,9 @@
 #include "fileIO.hpp"
 #include "standardIO.hpp"
 
-UploadFileCMD::UploadFileCMD() {
+UploadFileCMD::UploadFileCMD(DefaultIO* dio) {
     this->description = "upload an unclassifed csv data file";
+    this->dio = dio;
 }
 
 void UploadFileCMD::execute() {

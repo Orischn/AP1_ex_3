@@ -2,6 +2,6 @@
 
 class UploadFileCMD : public Command {
     public:
-        UploadFileCMD();
+        UploadFileCMD(DefaultIO*);
         void execute() override;
 };
