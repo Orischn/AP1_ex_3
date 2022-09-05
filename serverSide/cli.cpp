@@ -11,7 +11,7 @@
 
 CLI::CLI() {
 	commands.push_back(new UploadFileCMD(new StandardIO()));
-	commands.push_back(new AlgoSettingsCMD());
+	commands.push_back(AlgoSettingsCMD::getInstance(new StandardIO()));
 	commands.push_back(new ClassifyDataCMD(new FileIO("Commands/output.csv")));
 	commands.push_back(new DisplayResultsCMD(new StandardIO()));
 	commands.push_back(new DownloadResultsCMD());

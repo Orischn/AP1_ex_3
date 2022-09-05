@@ -11,8 +11,17 @@ ClassifyDataCMD::ClassifyDataCMD(DefaultIO* dio) {
 void ClassifyDataCMD::execute() {
     std::vector<Flower> cFlowers = getFlowersFromFile("Commands/train.csv");
     std::vector<Flower> ucFlowers = getFlowersFromFile("Commands/test.csv");
+    AlgoSettingsCMD settings = AlgoSettingsCMD::getInstance(dio);
     for (int i = 1; i <= ucFlowers.size(); i++) {
-        ucFlowers[i - 1].classifyFlower(cFlowers, AlgoSettingsCMD::getK(), &Flower::euclidianDisTo);
+        if (settings.getDistanceFunc().compare("EUC") == 0) {
+            ucFlowers[i - 1].classifyFlower(cFlowers, settings.getK(), &Flower::euclidianDisTo);
+        }
+        if (settings.getDistanceFunc().compare("MAN") == 0) {
+            ucFlowers[i - 1].classifyFlower(cFlowers, settings.getK(), &Flower::manhattanDisTo);
+        }
+        if (settings.getDistanceFunc().compare("CHE") == 0) {
+            ucFlowers[i - 1].classifyFlower(cFlowers, settings.getK(), &Flower::chebyshevDisTo);
+        }
     }
     std::string data;
     for (int i = 0; i < ucFlowers.size(); i++) {
