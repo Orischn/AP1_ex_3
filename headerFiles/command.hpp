@@ -5,10 +5,10 @@
 #include "defaultIO.hpp"
 
 class Command{
-    public:
-        std::string description;
-        DefaultIO* dio;
-        virtual void execute() = 0;
+public:
+    std::string description;
+    DefaultIO* dio;
+    virtual void execute() = 0;
 };
 
 #endif
