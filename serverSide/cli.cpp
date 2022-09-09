@@ -8,11 +8,13 @@
 #include "displayCommand.hpp"
 #include "downloadCommand.hpp"
 #include "matrixCommand.hpp"
+#include "settings.hpp"
 
 CLI::CLI() {
+	Settings* settings = new Settings();
 	commands.push_back(new UploadFileCMD(new StandardIO()));
-	commands.push_back(AlgoSettingsCMD::getInstance(new StandardIO()));
-	commands.push_back(new ClassifyDataCMD(new FileIO("Commands/output.csv")));
+	commands.push_back(new AlgoSettingsCMD(new StandardIO(), settings));
+	commands.push_back(new ClassifyDataCMD(new FileIO("Commands/output.csv"), settings));
 	commands.push_back(new DisplayResultsCMD(new StandardIO()));
 	commands.push_back(new DownloadResultsCMD());
 	commands.push_back(new AlgorithmConfusionMatrixCMD());

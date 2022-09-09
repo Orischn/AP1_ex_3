@@ -1,9 +1,8 @@
 #ifndef EX_3_HEADERFILES_CLI_H
 #define EX_3_HEADERFILES_CLI_H
 
-
-#include <string>
 #include "command.hpp"
+#include <string>
 #include <vector>
 
 class CLI{

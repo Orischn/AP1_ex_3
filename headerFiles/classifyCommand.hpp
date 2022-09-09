@@ -1,6 +1,7 @@
 #include "command.hpp"
 #include "flower.hpp"
 #include "defaultIO.hpp"
+#include "settings.hpp"
 #include <vector>
 #include <string>
 

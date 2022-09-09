@@ -1,15 +1,13 @@
 #include "settingsCommand.hpp"
 
-AlgoSettingsCMD* AlgoSettingsCMD::instance = NULL;
-
 AlgoSettingsCMD::AlgoSettingsCMD(DefaultIO* dio, Settings* settings) {
     this->description = "algorithm settings";
     this->dio = dio;
-    this->settings = settings
+    this->settings = settings;
 }
 
 void AlgoSettingsCMD::execute() {
-    dio->write("The current KNN parameters are: K = " + std::to_string(this->getK()) + ", distance metric = " + this->getDistanceFunc() + "\n");
+    dio->write("The current KNN parameters are: K = " + std::to_string(settings->getK()) + ", distance metric = " + settings->getDistanceFunc() + "\n");
     while (true) {
         std::string input = dio->read();
         if (input.compare("") == 0) {
@@ -27,8 +25,8 @@ void AlgoSettingsCMD::execute() {
                 dio->write("Invalid value for distance function\n");
                 continue;
             }
-            this->k = kValue;
-            this->distanceFunc = distFuncString;
+            settings->setK(kValue);
+            settings->setDistanceFunc(distFuncString);
         }
         catch (const std::exception&) {
             dio->write("Invalid input syntax\n");

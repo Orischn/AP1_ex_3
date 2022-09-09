@@ -1,5 +1,6 @@
 #include "command.hpp"
 #include "flower.hpp"
+#include "settings.hpp"
 #include <string>
 
 class AlgoSettingsCMD : public Command {
