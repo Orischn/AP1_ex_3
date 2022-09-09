@@ -6,7 +6,7 @@
 
 class Flower {
 private :
-    std::vector<int> data;
+    std::vector<double> data;
     std::string flowerType;
 public :
     void setFlowerType(std::string flowerType);
