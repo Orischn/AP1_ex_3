@@ -4,13 +4,8 @@
 
 class AlgoSettingsCMD : public Command {
 private:
-    static AlgoSettingsCMD* instance;
-    int k;
-    std::string distanceFunc;
-    AlgoSettingsCMD(DefaultIO*);
+    Settings* settings;
 public:
-    static AlgoSettingsCMD* getInstance(DefaultIO*);
+    AlgoSettingsCMD(DefaultIO*, Settings*);
     void execute() override;
-    int getK();
-    std::string getDistanceFunc();
 };

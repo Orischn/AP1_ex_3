@@ -3,15 +3,15 @@
 #include "fileIO.hpp"
 #include <sstream>
 
-ClassifyDataCMD::ClassifyDataCMD(DefaultIO* dio) {
+ClassifyDataCMD::ClassifyDataCMD(DefaultIO* dio, Settings* settings) {
     this->description = "classify data";
     this->dio = dio;
+    this->settings = settings;
 }
 
 void ClassifyDataCMD::execute() {
     std::vector<Flower> cFlowers = getFlowersFromFile("Commands/train.csv");
     std::vector<Flower> ucFlowers = getFlowersFromFile("Commands/test.csv");
-    AlgoSettingsCMD* settings = AlgoSettingsCMD::getInstance(dio);
     for (int i = 1; i <= ucFlowers.size(); i++) {
         if (settings->getDistanceFunc().compare("EUC") == 0) {
             ucFlowers[i - 1].classifyFlower(cFlowers, settings->getK(), &Flower::euclidianDisTo);

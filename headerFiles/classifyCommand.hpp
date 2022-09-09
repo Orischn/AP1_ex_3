@@ -5,9 +5,10 @@
 #include <string>
 
 class ClassifyDataCMD : public Command {
-public:
-    ClassifyDataCMD(DefaultIO*);
-    void execute() override;
 private:
     std::vector<Flower> getFlowersFromFile(std::string path);
+    Settings* settings;
+public:
+    ClassifyDataCMD(DefaultIO*, Settings*);
+    void execute() override;
 };

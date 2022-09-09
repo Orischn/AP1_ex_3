@@ -2,26 +2,10 @@
 
 AlgoSettingsCMD* AlgoSettingsCMD::instance = NULL;
 
-AlgoSettingsCMD::AlgoSettingsCMD(DefaultIO* dio) {
+AlgoSettingsCMD::AlgoSettingsCMD(DefaultIO* dio, Settings* settings) {
     this->description = "algorithm settings";
     this->dio = dio;
-    this->k = 3;
-    this->distanceFunc = "EUC";
-}
-
-AlgoSettingsCMD* AlgoSettingsCMD::getInstance(DefaultIO* dio) {
-    if (!instance) {
-        return new AlgoSettingsCMD(dio);
-    }
-    return instance;
-}
-
-int AlgoSettingsCMD::getK() {
-    return k;
-}
-
-std::string AlgoSettingsCMD::getDistanceFunc() {
-    return distanceFunc;
+    this->settings = settings
 }
 
 void AlgoSettingsCMD::execute() {
