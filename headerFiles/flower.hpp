@@ -6,26 +6,10 @@
 
 class Flower {
 private :
-    double sepalWidth;
-    double sepalLength;
-    double petalWidth;
-    double petalLength;
+    std::vector<int> data;
     std::string flowerType;
 public :
-    //CTORS
-    Flower();
-    Flower(const Flower& flower);
-    //setters
-    void setSepalWidth(double sepalWidth);
-    void setSepalLength(double sepalLength);
-    void setPetalWidth(double petalWidth);
-    void setPetalLength(double petalLength);
     void setFlowerType(std::string flowerType);
-    //getters
-    double getSepalWidth() const;
-    double getSepalLength() const;
-    double getPetalWidth() const;
-    double getPetalLength() const;
     std::string getFlowerType() const;
     /*
      * Returns the euclidian distance from this flower to a different flower.
