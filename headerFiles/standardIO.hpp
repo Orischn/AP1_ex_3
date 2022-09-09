@@ -4,9 +4,9 @@
 #include "defaultIO.hpp"
 
 class StandardIO : public DefaultIO {
-    public:
-        std::string read() override;
-        void write(std::string) override;
+public:
+    std::string read() override;
+    void write(std::string) override;
 };
 
 #endif
