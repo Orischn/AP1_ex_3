@@ -85,7 +85,7 @@ Flower Flower::stof(std::string sFlower) {
     std::string parsed;
     while(getline(ssFlower, parsed, ',')) {
         try {
-            flower.data.push_back(std::stoi(parsed));
+            flower.data.push_back(std::stod(parsed));
         } catch (const std::exception&) {
             flower.flowerType = parsed;
         }
