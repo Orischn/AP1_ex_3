@@ -4,7 +4,10 @@
 #include "defaultIO.hpp"
 
 class SocketIO : public DefaultIO {
+private:
+    int sock;
 public:
+    SocketIO(int);
     std::string read() override;
     void write(std::string) override;
 };

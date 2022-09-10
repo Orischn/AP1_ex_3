@@ -8,8 +8,9 @@
 class CLI{
 private:
     std::vector<Command*> commands;
+    int sock;
 public:
-    CLI();
+    CLI(int);
     void start();
  
 };
