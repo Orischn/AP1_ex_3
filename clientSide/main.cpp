@@ -14,7 +14,7 @@ int main(int argc, char* argv[]) {
     pthread_t thread;
     pthread_create(&thread, NULL, (THREADFUNCPTR)read, client);
     while (true) {
-        client.write();
+        client->write();
     }
 }
 
