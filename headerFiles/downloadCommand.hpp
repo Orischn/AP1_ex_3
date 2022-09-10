@@ -3,6 +3,6 @@
 
 class DownloadResultsCMD : public Command {
 public:
-    DownloadResultsCMD();
+    DownloadResultsCMD(DefaultIO*);
     void execute() override;
 };
