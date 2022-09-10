@@ -3,8 +3,7 @@
 
 We created IO systems that inherit from the DefaultIO to communicate between client and server side.
 
-We used FileIO to write and read from files, SocketIO to transfer data between client and server side using sockets (and StandardIO - relevant?)
-<<<>>>
+We used FileIO to write and read from files, SocketIO to transfer data between client and server sides using sockets.
 
 Then, we created the CLI, that manages the communication between the client(s) to the server.
 
@@ -30,8 +29,21 @@ The sixth command (6) is used to show to show the client the confusion matrix of
 
 The seventh (7) and final command allow the client to exit the program and terminates the communication between the server to this current client.
 
-**WHERE I STOPPED FOR NOW**
+To **compile** the code use the following command **from the project path**:
 
+make compile
+
+To **run** the **server** side use:
+
+make run_server
+
+To **run** the **client** side use from a **different terminal**:
+
+make run_client
+
+**THATS IT?**
+
+**DOES THE PARY BEL0W RELEVANT?
 
 We read the data from the given input path into a character array.
 
@@ -62,15 +74,3 @@ We used a 10 seconds timeout length.
 
 We used a buffer size of 240 characters, which translates into 240 bytes, like the size of the given unclassified flowers file.
 
-
-To **compile** the code use the following command **from the project path**:
-
-make compile
-
-To **run** the **server** side use:
-
-make run_server
-
-To **run** the **client** side use from a **different terminal**:
-
-make run_client
