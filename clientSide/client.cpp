@@ -6,6 +6,8 @@
 #include <arpa/inet.h>
 #include <string.h>
 #include "client.hpp"
+#include "standardIO.hpp"
+#include "socketIO.hpp"
 
 #define BUFFER_SIZE 512
 
@@ -34,35 +36,15 @@ void Client::connectToServer(const char* ip, int port) {
     }
 }
 
-void Client::sendData(char* inputPath) {
-    std::ifstream input;
-    input.open(inputPath);
-    char unclassifiedData[BUFFER_SIZE];
-    int i = 0;
-    while(!input.eof()) {
-        input.get(unclassifiedData[i++]);
-    }
-    input.close();
-    int sent = send(this->sock, unclassifiedData, BUFFER_SIZE, 0);
-    if (sent < 0) {
-        close(this->sock);
-        perror("error sending data");
-        exit(1);
-    }
+void Client::read() {
+    SocketIO sockio(this->sock);
+    StandardIO stdio;
+    stdio.write(sockio.read());
 }
 
-void Client::handleResponse(char* outputPath) {
-    char classifiedData[BUFFER_SIZE];
-    int read_bytes = recv(this->sock, classifiedData, BUFFER_SIZE, 0);
-    if (read_bytes < 0) {
-        close(this->sock);
-        perror("error recieving data");
-        exit(1);
-    }
-    else {
-        std::ofstream output;
-        output.open(outputPath);
-        output<<classifiedData;
-        output.close();
-    }
+void Client::write() {
+    SocketIO sockio(this->sock);
+    StandardIO stdio;
+    sockio.write(stdio.read());
 }
+
