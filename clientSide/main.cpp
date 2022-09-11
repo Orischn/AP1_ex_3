@@ -3,7 +3,7 @@
 #include "standardIO.hpp"
 #include <pthread.h>
 
-typedef void* (THREADFUNCPTR)(void*);
+typedef void* (*THREADFUNCPTR)(void*);
 void* read(Client* client);
 
 int main(int argc, char* argv[]) {
