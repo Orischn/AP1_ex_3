@@ -14,10 +14,12 @@ void DownloadResultsCMD::execute() {
 	std::string results = TATData->getResults();
 	std::stringstream sResults(results);
 	std::string type;
+	std::string temp = "";
 	int i = 1;
 	while (getline(sResults, type)) {
-		fioC.write(std::to_string(i++) + "	" + type + "\n");
+		temp += std::to_string(i++) + "	" + type + "\n";
 	}
+	fioC.write(temp);
 	dio->write("Done.\n");
 	dio->read();
 }
