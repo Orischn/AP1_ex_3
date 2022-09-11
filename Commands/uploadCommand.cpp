@@ -2,21 +2,21 @@
 #include "fileIO.hpp"
 #include "standardIO.hpp"
 
-UploadFileCMD::UploadFileCMD(DefaultIO* dio) {
+UploadFileCMD::UploadFileCMD(DefaultIO* dio, TestAndTrainData* TATData) {
     this->description = "upload an unclassifed csv data file";
     this->dio = dio;
+    this->TATData = TATData;
 }
 
 void UploadFileCMD::execute() {
+    FileIO fio;
     dio->write("Please upload your local train csv file.\n");
-    FileIO fio(dio->read());
+    fio.setPath(dio->read());
     std::string data = fio.read();
-    fio.setPath("Commands/train.csv");
-    fio.write(data);
+    TATData->setTrainData(data);
 
     dio->write("Please upload your local test csv file.\n");
     fio.setPath(dio->read());
     data = fio.read();
-    fio.setPath("Commands/test.csv");
-    fio.write(data);
+    TATData->setTestData(data);
 }

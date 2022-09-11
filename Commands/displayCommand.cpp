@@ -3,15 +3,14 @@
 #include "fileIO.hpp"
 #include <sstream>
 
-DisplayResultsCMD::DisplayResultsCMD(DefaultIO* dio) {
+DisplayResultsCMD::DisplayResultsCMD(DefaultIO* dio, TestAndTrainData* TATData) {
 	description = "display results";
 	this->dio = dio;
+	this->TATData = TATData;
 }
 
 void DisplayResultsCMD::execute() {
-	FileIO fio("Commands/output.csv");
-	std::string data = fio.read();
-	std::stringstream sdata(data);
+	std::stringstream sdata(TATData->getResults());
 	std::string type;
 	int i = 1;
 	while(getline(sdata, type)) {

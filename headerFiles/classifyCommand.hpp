@@ -2,14 +2,15 @@
 #include "flower.hpp"
 #include "defaultIO.hpp"
 #include "settings.hpp"
+#include "testAndTrainData.hpp"
 #include <vector>
 #include <string>
 
 class ClassifyDataCMD : public Command {
 private:
-    std::vector<Flower> getFlowersFromFile(std::string path);
     Settings* settings;
+    TestAndTrainData* TATData;
 public:
-    ClassifyDataCMD(DefaultIO*, Settings*);
+    ClassifyDataCMD(DefaultIO*, Settings*, TestAndTrainData*);
     void execute() override;
 };

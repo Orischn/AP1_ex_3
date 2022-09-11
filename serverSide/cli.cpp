@@ -10,15 +10,17 @@
 #include "downloadCommand.hpp"
 #include "matrixCommand.hpp"
 #include "settings.hpp"
+#include "testAndTrainData.hpp"
 
 CLI::CLI(int sock) {
 	this->sock = sock;
 	Settings* settings = new Settings();
-	commands.push_back(new UploadFileCMD(new SocketIO(sock)));
+	TestAndTrainData* TATData = new TestAndTrainData();
+	commands.push_back(new UploadFileCMD(new SocketIO(sock), TATData));
 	commands.push_back(new AlgoSettingsCMD(new SocketIO(sock), settings));
-	commands.push_back(new ClassifyDataCMD(new FileIO("Commands/output.csv"), settings));
-	commands.push_back(new DisplayResultsCMD(new SocketIO(sock)));
-	commands.push_back(new DownloadResultsCMD(new SocketIO(sock)));
+	commands.push_back(new ClassifyDataCMD(new FileIO("Commands/output.csv"), settings, TATData));
+	commands.push_back(new DisplayResultsCMD(new SocketIO(sock), TATData));
+	commands.push_back(new DownloadResultsCMD(new SocketIO(sock), TATData));
 	commands.push_back(new AlgorithmConfusionMatrixCMD());
 }
 
