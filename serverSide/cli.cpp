@@ -18,7 +18,7 @@ CLI::CLI(int sock) {
 	commands.push_back(new AlgoSettingsCMD(new SocketIO(sock), settings));
 	commands.push_back(new ClassifyDataCMD(new FileIO("Commands/output.csv"), settings));
 	commands.push_back(new DisplayResultsCMD(new SocketIO(sock)));
-	commands.push_back(new DownloadResultsCMD());
+	commands.push_back(new DownloadResultsCMD(new SocketIO(sock)));
 	commands.push_back(new AlgorithmConfusionMatrixCMD());
 }
 

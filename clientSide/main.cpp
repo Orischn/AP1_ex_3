@@ -3,8 +3,8 @@
 #include "standardIO.hpp"
 #include <pthread.h>
 
-typedef void* (THREADFUNCPTR)(void);
-void read(Client client);
+typedef void* (THREADFUNCPTR)(void*);
+void* read(Client* client);
 
 int main(int argc, char* argv[]) {
     const char* ip = "127.0.0.1";
@@ -14,12 +14,13 @@ int main(int argc, char* argv[]) {
     pthread_t thread;
     pthread_create(&thread, NULL, (THREADFUNCPTR)read, client);
     while (true) {
-        client.write();
+        client->write();
     }
 }
 
-void read(Client client) {
+void* read(Client* client) {
     while (true) {
         client->read();
     }
+    return NULL;
 }

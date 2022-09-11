@@ -18,4 +18,5 @@ void DisplayResultsCMD::execute() {
 		dio->write(std::to_string(i++) + "	" + type + "\n");
 	}
 	dio->write("Done.\n");
+	dio->read();
 }
