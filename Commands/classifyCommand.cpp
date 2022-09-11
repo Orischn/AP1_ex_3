@@ -10,6 +10,12 @@ ClassifyDataCMD::ClassifyDataCMD(DefaultIO* dio, Settings* settings, TestAndTrai
     this->TATData = TATData;
 }
 
+ClassifyDataCMD::~ClassifyDataCMD() {
+    delete dio;
+    delete settings;
+    delete TATData;
+}
+
 void ClassifyDataCMD::execute() {
     std::vector<Flower> cFlowers = TATData->getTrainDataVector();
     std::vector<Flower> ucFlowers = TATData->getTestDataVector();

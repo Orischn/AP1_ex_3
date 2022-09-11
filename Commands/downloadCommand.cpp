@@ -9,6 +9,11 @@ DownloadResultsCMD::DownloadResultsCMD(DefaultIO* dio, TestAndTrainData* TATData
 	this->TATData = TATData;
 }
 
+DownloadResultsCMD::~DownloadResultsCMD() {
+	delete dio;
+	delete TATData;
+}
+
 void DownloadResultsCMD::execute() {
 	FileIO fioC(dio->read() + "/results.txt");
 	std::string results = TATData->getResults();

@@ -6,6 +6,11 @@ AlgoSettingsCMD::AlgoSettingsCMD(DefaultIO* dio, Settings* settings) {
     this->settings = settings;
 }
 
+AlgoSettingsCMD::~AlgoSettingsCMD() {
+    delete dio;
+    delete settings;
+}
+
 void AlgoSettingsCMD::execute() {
     dio->write("The current KNN parameters are: K = " + std::to_string(settings->getK()) + ", distance metric = " + settings->getDistanceFunc() + "\n");
     while (true) {

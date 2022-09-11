@@ -9,6 +9,11 @@ DisplayResultsCMD::DisplayResultsCMD(DefaultIO* dio, TestAndTrainData* TATData) 
 	this->TATData = TATData;
 }
 
+DisplayResultsCMD::~DisplayResultsCMD() {
+	delete dio;
+	delete TATData;
+}
+
 void DisplayResultsCMD::execute() {
 	std::stringstream sdata(TATData->getResults());
 	std::string type;

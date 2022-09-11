@@ -8,6 +8,11 @@ UploadFileCMD::UploadFileCMD(DefaultIO* dio, TestAndTrainData* TATData) {
     this->TATData = TATData;
 }
 
+UploadFileCMD::~UploadFileCMD() {
+    delete dio;
+    delete TATData;
+}
+
 void UploadFileCMD::execute() {
     FileIO fio;
     dio->write("Please upload your local train csv file.\n");
