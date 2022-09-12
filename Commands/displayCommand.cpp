@@ -20,6 +20,6 @@ void DisplayResultsCMD::execute() {
 	while(getline(sdata, type)) {
 		dio->write(std::to_string(i++) + "	" + type + "\n");
 	}
-	dio->write("Done.");
+	dio->write("Done.\n");
 	dio->read();
 }

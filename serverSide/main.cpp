@@ -7,13 +7,13 @@
 #include <arpa/inet.h>
 #include <pthread.h>
 
-#define TIMEOUT 10E6 // 60 seconds
+#define TIMEOUT 60E6 // 60 seconds
 typedef void* (*THREADFUNCPTR)(void*);
 void* runServer(int*);
 void* timeout(pthread_t*);
 
 int main() {
-    Server server(42068);
+    Server server(42069);
     std::vector<pthread_t> threads;
     pthread_t acceptingThread = pthread_self();
     pthread_t timeoutThread;
