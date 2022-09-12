@@ -97,7 +97,7 @@ void AlgorithmConfusionMatrixCMD::execute() {
 	dio->write("	Iris-setosa		Iris-versicolor		Iris-virginica\n");
 	std::string flowerTypes[3] = { "Iris-setosa", "Iris-versicolor", "Iris-virginica" };
 	for (int i = 0; i < 3; i++) {
-		dio->write(flowerTypes[i] + "		");
+		dio->write(flowerTypes[i] + "	");
 		for (int j = 0; j < 3; j++) {
 			dio->write(std::to_string(confusionMatrix[i][j]) + "%	");
 		}

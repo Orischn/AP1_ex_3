@@ -24,6 +24,5 @@ void DownloadResultsCMD::execute() {
 		temp += std::to_string(i++) + "	" + type + "\n";
 	}
 	fioC.write(temp);
-	dio->write("Done.");
 	dio->read();
 }
