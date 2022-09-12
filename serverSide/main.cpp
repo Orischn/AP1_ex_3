@@ -7,13 +7,13 @@
 #include <arpa/inet.h>
 #include <pthread.h>
 
-#define TIMEOUT 10E6 // 10 seconds
+#define TIMEOUT 10E6 // 60 seconds
 typedef void* (*THREADFUNCPTR)(void*);
 void* runServer(int*);
 void* timeout(pthread_t*);
 
 int main() {
-    Server server(42069);
+    Server server(42068);
     std::vector<pthread_t> threads;
     pthread_t acceptingThread = pthread_self();
     pthread_t timeoutThread;
@@ -38,12 +38,12 @@ void* runServer(int* sock) {
     cli->start();
     close(*sock);
     delete cli;
-    pthread_exit(NULL);
+    return NULL;
 }
 
 void* timeout(pthread_t* runningThread) {
     const clock_t startingTime = clock();
     while(clock() - startingTime < TIMEOUT);
     pthread_cancel(*runningThread);
-    pthread_exit(NULL);
+    return NULL;
 }
