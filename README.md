@@ -29,6 +29,14 @@ The sixth command (6) is used to show to show the client the confusion matrix of
 
 The seventh (7) and final command allow the client to exit the program and terminates the communication between the server to this current client.
 
+To allow several clients that are connected to server simultaneously, we created thread for each different client who connects to the server.
+
+Further more, for each client, we used two extra threads, one for receive data from the server, and the other to send data to the server without waiting for the receiving data to end.
+
+We used port number 42069.
+
+We used tymeout of 60 seconds.
+
 To **compile** the code use the following command **from the project path**:
 
 make compile
@@ -41,36 +49,4 @@ To **run** the **client** side use from a **different terminal**:
 
 make run_client
 
-**THATS IT?**
-
-**DOES THE PARY BEL0W RELEVANT?
-
-We read the data from the given input path into a character array.
-
-Then, we sent the array from the client side to the server side.
-
-On the server side, we wrote the received data to a temporary file.
-
-We created a vector of unclassified flowers from the temporary file, and we created a vector of classified flowers from the given classified flowers file.
-
-
-Then, for each unclassified flower we applied the algorithm below:
-
-Firstly, we sorted the flowers array using the given distance method that was given as an argument to the function.
-Then, we counted the amount of times that each type of the first k flowers in the sorted array appeared.
-We set the type of unclassified flower as the most appeared type from above, which made the flower classified.
-
-Then, we wrote the type of the classified flowers (were unclassified) to a temporary file.
-
-We read the data from the temporary file into a character array.
-
-We sent the array from the server side to  back to the client side.
-
-Eventually, on the client side, we wrote the received data into the given output path.
-
-We used port number 42069 (because it's a cool number).
-
-We used a 10 seconds timeout length.
-
-We used a buffer size of 240 characters, which translates into 240 bytes, like the size of the given unclassified flowers file.
 
