@@ -21,7 +21,7 @@ CLI::CLI(int sock) {
 	commands.push_back(new ClassifyDataCMD(new FileIO("Commands/output.csv"), settings, TATData));
 	commands.push_back(new DisplayResultsCMD(new SocketIO(sock), TATData));
 	commands.push_back(new DownloadResultsCMD(new SocketIO(sock), TATData));
-	commands.push_back(new AlgorithmConfusionMatrixCMD());
+	commands.push_back(new AlgorithmConfusionMatrixCMD(new SocketIO(sock), settings, TATData));
 }
 
 CLI::~CLI() {
