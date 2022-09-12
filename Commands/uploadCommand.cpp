@@ -18,9 +18,11 @@ void UploadFileCMD::execute() {
     fio.setPath(dio->read());
     std::string data = fio.read();
     TATData->setTrainData(data);
+    dio->write("upload complete.\n");
 
     dio->write("Please upload your local test csv file.\n");
     fio.setPath(dio->read());
     data = fio.read();
     TATData->setTestData(data);
+    dio->write("upload complete.\n");
 }
