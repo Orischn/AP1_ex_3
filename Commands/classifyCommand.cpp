@@ -17,15 +17,15 @@ ClassifyDataCMD::~ClassifyDataCMD() {
 void ClassifyDataCMD::execute() {
     std::vector<Flower> cFlowers = TATData->getTrainDataVector();
     std::vector<Flower> ucFlowers = TATData->getTestDataVector();
-    for (int i = 1; i <= ucFlowers.size(); i++) {
+    for (int i = 0; i < ucFlowers.size(); i++) {
         if (settings->getDistanceFunc().compare("EUC") == 0) {
-            ucFlowers[i - 1].classifyFlower(cFlowers, settings->getK(), &Flower::euclidianDisTo);
+            ucFlowers[i].classifyFlower(cFlowers, settings->getK(), &Flower::euclidianDisTo);
         }
         if (settings->getDistanceFunc().compare("MAN") == 0) {
-            ucFlowers[i - 1].classifyFlower(cFlowers, settings->getK(), &Flower::manhattanDisTo);
+            ucFlowers[i].classifyFlower(cFlowers, settings->getK(), &Flower::manhattanDisTo);
         }
         if (settings->getDistanceFunc().compare("CHE") == 0) {
-            ucFlowers[i - 1].classifyFlower(cFlowers, settings->getK(), &Flower::chebyshevDisTo);
+            ucFlowers[i].classifyFlower(cFlowers, settings->getK(), &Flower::chebyshevDisTo);
         }
     }
     std::string data;

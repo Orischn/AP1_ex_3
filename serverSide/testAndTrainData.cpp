@@ -17,23 +17,23 @@ void TestAndTrainData::setResults(std::string results) {
 }
 
 std::vector<Flower> TestAndTrainData::getTestDataVector() {
-    std::vector<Flower> cFlowers;
+    std::vector<Flower> flowers;
     std::stringstream ssFlowers(this->testData);
     std::string sFlower;
     while(getline(ssFlowers, sFlower)) {
-        cFlowers.push_back(Flower::stof(sFlower));
+        flowers.push_back(Flower::stof(sFlower));
     }
-    return cFlowers;
+    return flowers;
 }
 
 std::vector<Flower> TestAndTrainData::getTrainDataVector() {
-    std::vector<Flower> cFlowers;
+    std::vector<Flower> flowers;
     std::stringstream ssFlowers(this->trainData);
     std::string sFlower;
     while(getline(ssFlowers, sFlower)) {
-        cFlowers.push_back(Flower::stof(sFlower));
+        flowers.push_back(Flower::stof(sFlower));
     }
-    return cFlowers;
+    return flowers;
 }
 
 std::string TestAndTrainData::getTestDataStr() {

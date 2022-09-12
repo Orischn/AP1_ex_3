@@ -19,7 +19,7 @@ CLI::CLI(int sock) {
 	this->TATData = new TestAndTrainData();
 	commands.push_back(new UploadFileCMD(new SocketIO(sock), TATData));
 	commands.push_back(new AlgoSettingsCMD(new SocketIO(sock), settings));
-	commands.push_back(new ClassifyDataCMD(new FileIO("Commands/output.csv"), settings, TATData));
+	commands.push_back(new ClassifyDataCMD(new SocketIO(sock), settings, TATData));
 	commands.push_back(new DisplayResultsCMD(new SocketIO(sock), TATData));
 	commands.push_back(new DownloadResultsCMD(new SocketIO(sock), TATData));
 	commands.push_back(new AlgorithmConfusionMatrixCMD(new SocketIO(sock), settings, TATData));
@@ -38,20 +38,16 @@ void CLI::start() {
 		for (int i = 0; i < commands.size(); i++) {
 			sio.write(std::to_string(i + 1) +". " + (commands[i]->description) + "\n");
 		}
+		sio.write("7. exit\n");
 		while (input < 1 || input > 7) {
 			try {
-				std::string test = sio.read();
-				input = std::stoi(test);
-				std::cout<<test;
+				input = std::stoi(sio.read());
 			} catch (const std::exception&) {
 				sio.write("Option unavailable! Please try again\n");
 				continue;
 			}
 		}
 		if (input == 7) {
-			/*for (int i = 0; i < commands.size(); i++) {
-				delete commands[i];
-			}*/
 			return;
 		}
 		commands[input - 1]->execute();
