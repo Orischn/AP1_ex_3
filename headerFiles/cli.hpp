@@ -14,6 +14,7 @@ private:
     int sock;
     Settings* settings;
     TestAndTrainData* TATData;
+    void* executeCommand(int*);
 public:
     CLI(int);
     ~CLI();

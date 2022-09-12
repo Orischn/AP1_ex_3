@@ -7,26 +7,43 @@
 #include <arpa/inet.h>
 #include <pthread.h>
 
+#define TIMEOUT 10E6 // 10 seconds
 typedef void* (*THREADFUNCPTR)(void*);
-void* runServer(Server* server);
+void* runServer(int*);
+void* timeout(pthread_t*);
 
 int main() {
-    Server server(42068);
-    runServer(&server);
+    Server server(42069);
+    std::vector<pthread_t> threads;
+    pthread_t acceptingThread = pthread_self();
+    pthread_t timeoutThread;
+    while(true) {
+        pthread_create(&timeoutThread, NULL, (THREADFUNCPTR)timeout, &acceptingThread);
+        int sock = server.acceptClient();
+         if (sock < 0) {
+            std::cout<<"error connecting to client\n";
+            pthread_cancel(timeoutThread);
+            continue;
+        }
+        pthread_cancel(timeoutThread);
+        pthread_t thread;
+        threads.push_back(thread);
+        pthread_create(&threads.back(), NULL, (THREADFUNCPTR)runServer, &sock);
+    }
     return 0;
 }
 
-void* runServer(Server* server) {
-    int sock = server->acceptClient();
-    pthread_t thread;
-    pthread_create(&thread, NULL, (THREADFUNCPTR)runServer, server);
-    if (sock < 0) {
-        std::cout<<"error connecting to client\n";
-        return NULL;
-    }
-    CLI* cli = new CLI(sock);
+void* runServer(int* sock) {
+    CLI* cli = new CLI(*sock);
     cli->start();
-    close(sock);
+    close(*sock);
     delete cli;
-    return NULL;
+    pthread_exit(NULL);
+}
+
+void* timeout(pthread_t* runningThread) {
+    const clock_t startingTime = clock();
+    while(clock() - startingTime < TIMEOUT);
+    pthread_cancel(*runningThread);
+    pthread_exit(NULL);
 }
