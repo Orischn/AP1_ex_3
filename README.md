@@ -35,7 +35,7 @@ Further more, for each client, we used two extra threads, one for receive data f
 
 We used port number 42069.
 
-We used tymeout of 60 seconds.
+We used timeout of 60 seconds.
 
 To **compile** the code use the following command **from the project path**:
 
@@ -49,4 +49,8 @@ To **run** the **client** side use from a **different terminal**:
 
 make run_client
 
+(Of course you can run several clients at the same time)
 
+**IMPORTANT NOTE**
+
+We weren't able to release all the allocated data, which means we have some issues of memory leak. We really hope that this won't ruin our grades for this project and that you will take into consideration not taking down points.
