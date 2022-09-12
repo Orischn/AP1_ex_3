@@ -50,9 +50,6 @@ std::string Client::write() {
     StandardIO stdio;
     std::string readString(stdio.read());
     sockio.write(readString);
-    if (!readString.compare("7")) {
-        return "";
-    }
     return readString;
 }
 

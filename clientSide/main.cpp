@@ -17,7 +17,7 @@ int main(int argc, char* argv[]) {
     pthread_t thread;
     pthread_create(&thread, NULL, (THREADFUNCPTR)read, client);
     std::string writtenString = "default";
-    while (writtenString.compare("")) {
+    while (writtenString.compare("7")) {
         writtenString = client->write();
     }
     pthread_join(thread, NULL);

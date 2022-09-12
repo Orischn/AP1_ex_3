@@ -11,6 +11,7 @@
 #include "matrixCommand.hpp"
 #include "settings.hpp"
 #include "testAndTrainData.hpp"
+#include <iostream>
 
 CLI::CLI(int sock) {
 	this->sock = sock;
@@ -32,21 +33,19 @@ CLI::~CLI() {
 void CLI::start() {
 	SocketIO sio(this->sock);
 	while (true) {
-		int input;
+		int input = 0;
 		sio.write("Welcome to the KNN Classifier Server. Please choose an option\n");
 		for (int i = 0; i < commands.size(); i++) {
 			sio.write(std::to_string(i + 1) +". " + (commands[i]->description) + "\n");
 		}
-		try {
-			input = std::stoi(sio.read());
-		} catch (const std::exception&) {
-			sio.write("Option unavailable! Please try again\n");
-		}
 		while (input < 1 || input > 7) {
 			try {
-				input = std::stoi(sio.read());
+				std::string test = sio.read();
+				input = std::stoi(test);
+				std::cout<<test;
 			} catch (const std::exception&) {
 				sio.write("Option unavailable! Please try again\n");
+				continue;
 			}
 		}
 		if (input == 7) {
