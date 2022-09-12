@@ -8,5 +8,5 @@ run_server:
 	@echo "server done"
 run_client:
 	@echo "client running"
-	@./client.exe clientSide/unclassified.csv clientSide/classified.csv
+	@./client.exe
 	@echo "client done"
