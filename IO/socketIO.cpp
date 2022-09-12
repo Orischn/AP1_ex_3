@@ -13,7 +13,10 @@ SocketIO::SocketIO(int sock) {
 
 std::string SocketIO::read() {
 	char buffer[BUFFER_SIZE];
-	recv(this->sock, buffer, BUFFER_SIZE, 0);
+	int recvBytes = recv(this->sock, buffer, BUFFER_SIZE, 0);
+	if (recvBytes == 0) {
+		return "";
+	}
 	std::string input(buffer);
 	return input;
 }

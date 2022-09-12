@@ -1,7 +1,10 @@
+#include <pthread.h>
+#include <string>
+#include <iostream>
 #include "client.hpp"
 #include "socketIO.hpp"
 #include "standardIO.hpp"
-#include <pthread.h>
+
 
 typedef void* (*THREADFUNCPTR)(void*);
 void* read(Client* client);
@@ -13,14 +16,18 @@ int main(int argc, char* argv[]) {
     client->connectToServer(ip, port);
     pthread_t thread;
     pthread_create(&thread, NULL, (THREADFUNCPTR)read, client);
-    while (true) {
-        client->write();
+    std::string writtenString = "default";
+    while (writtenString.compare("")) {
+        writtenString = client->write();
     }
+    pthread_join(thread, NULL);
+    delete client;
 }
 
 void* read(Client* client) {
-    while (true) {
-        client->read();
+    std::string readString = "default";
+    while (readString.compare("")) {
+        readString = client->read();
     }
     return NULL;
 }

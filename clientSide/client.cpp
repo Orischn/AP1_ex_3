@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <string>
 #include <string.h>
 #include "client.hpp"
 #include "standardIO.hpp"
@@ -36,15 +37,22 @@ void Client::connectToServer(const char* ip, int port) {
     }
 }
 
-void Client::read() {
+std::string Client::read() {
     SocketIO sockio(this->sock);
     StandardIO stdio;
-    stdio.write(sockio.read());
+    std::string readString = sockio.read();
+    stdio.write(readString);
+    return readString;
 }
 
-void Client::write() {
+std::string Client::write() {
     SocketIO sockio(this->sock);
     StandardIO stdio;
-    sockio.write(stdio.read());
+    std::string readString(stdio.read());
+    sockio.write(readString);
+    if (!readString.compare("7")) {
+        return "";
+    }
+    return readString;
 }
 

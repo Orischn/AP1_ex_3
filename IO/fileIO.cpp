@@ -12,12 +12,14 @@ std::string FileIO::read() {
     std::ifstream input(this->path);
     std::stringstream buffer;
     buffer << input.rdbuf();
+    input.close();
     return buffer.str();
 }
 
 void FileIO::write(std::string text) {
     std::ofstream output(this->path);
-    output<<text;
+    output << text;
+    output.close();
 }
 
 void FileIO::setPath(std::string path) {

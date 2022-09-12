@@ -8,8 +8,8 @@ public:
     Client();
     ~Client();
     void connectToServer(const char* ip, const int port);
-    void read();
-    void write();
+    std::string read();
+    std::string write();
 };
 
 #endif

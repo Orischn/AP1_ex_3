@@ -12,8 +12,6 @@ ClassifyDataCMD::ClassifyDataCMD(DefaultIO* dio, Settings* settings, TestAndTrai
 
 ClassifyDataCMD::~ClassifyDataCMD() {
     delete dio;
-    delete settings;
-    delete TATData;
 }
 
 void ClassifyDataCMD::execute() {

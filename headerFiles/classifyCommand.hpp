@@ -12,5 +12,6 @@ private:
     TestAndTrainData* TATData;
 public:
     ClassifyDataCMD(DefaultIO*, Settings*, TestAndTrainData*);
+    ~ClassifyDataCMD();
     void execute() override;
 };

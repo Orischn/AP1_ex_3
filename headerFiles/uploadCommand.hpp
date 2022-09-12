@@ -7,5 +7,6 @@ private:
     TestAndTrainData* TATData;
 public:
     UploadFileCMD(DefaultIO*, TestAndTrainData*);
+    ~UploadFileCMD();
     void execute() override;
 };

@@ -4,5 +4,6 @@
 class AlgorithmConfusionMatrixCMD : public Command {
 public:
     AlgorithmConfusionMatrixCMD();
+    ~AlgorithmConfusionMatrixCMD();
     void execute() override;
 };

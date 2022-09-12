@@ -14,14 +14,19 @@
 
 CLI::CLI(int sock) {
 	this->sock = sock;
-	Settings* settings = new Settings();
-	TestAndTrainData* TATData = new TestAndTrainData();
+	this->settings = new Settings();
+	this->TATData = new TestAndTrainData();
 	commands.push_back(new UploadFileCMD(new SocketIO(sock), TATData));
 	commands.push_back(new AlgoSettingsCMD(new SocketIO(sock), settings));
 	commands.push_back(new ClassifyDataCMD(new FileIO("Commands/output.csv"), settings, TATData));
 	commands.push_back(new DisplayResultsCMD(new SocketIO(sock), TATData));
 	commands.push_back(new DownloadResultsCMD(new SocketIO(sock), TATData));
 	commands.push_back(new AlgorithmConfusionMatrixCMD());
+}
+
+CLI::~CLI() {
+	delete this->settings;
+	delete this->TATData;
 }
 
 void CLI::start() {
@@ -35,15 +40,20 @@ void CLI::start() {
 		try {
 			input = std::stoi(sio.read());
 		} catch (const std::exception&) {
-			return;
+			sio.write("Option unavailable! Please try again\n");
 		}
 		while (input < 1 || input > 7) {
-			sio.write("Option unavailable! Please try again\n");
 			try {
 				input = std::stoi(sio.read());
 			} catch (const std::exception&) {
-				return;
+				sio.write("Option unavailable! Please try again\n");
 			}
+		}
+		if (input == 7) {
+			/*for (int i = 0; i < commands.size(); i++) {
+				delete commands[i];
+			}*/
+			return;
 		}
 		commands[input - 1]->execute();
 	}

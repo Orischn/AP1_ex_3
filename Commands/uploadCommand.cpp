@@ -10,7 +10,6 @@ UploadFileCMD::UploadFileCMD(DefaultIO* dio, TestAndTrainData* TATData) {
 
 UploadFileCMD::~UploadFileCMD() {
     delete dio;
-    delete TATData;
 }
 
 void UploadFileCMD::execute() {

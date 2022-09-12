@@ -11,7 +11,6 @@ DownloadResultsCMD::DownloadResultsCMD(DefaultIO* dio, TestAndTrainData* TATData
 
 DownloadResultsCMD::~DownloadResultsCMD() {
 	delete dio;
-	delete TATData;
 }
 
 void DownloadResultsCMD::execute() {

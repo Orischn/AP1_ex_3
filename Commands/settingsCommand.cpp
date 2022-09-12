@@ -8,7 +8,6 @@ AlgoSettingsCMD::AlgoSettingsCMD(DefaultIO* dio, Settings* settings) {
 
 AlgoSettingsCMD::~AlgoSettingsCMD() {
     delete dio;
-    delete settings;
 }
 
 void AlgoSettingsCMD::execute() {

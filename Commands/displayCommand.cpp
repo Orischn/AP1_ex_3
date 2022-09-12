@@ -11,7 +11,6 @@ DisplayResultsCMD::DisplayResultsCMD(DefaultIO* dio, TestAndTrainData* TATData) 
 
 DisplayResultsCMD::~DisplayResultsCMD() {
 	delete dio;
-	delete TATData;
 }
 
 void DisplayResultsCMD::execute() {

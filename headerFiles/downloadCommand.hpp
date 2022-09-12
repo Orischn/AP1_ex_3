@@ -7,5 +7,6 @@ private:
     TestAndTrainData* TATData;
 public:
     DownloadResultsCMD(DefaultIO*, TestAndTrainData*);
+    ~DownloadResultsCMD();
     void execute() override;
 };

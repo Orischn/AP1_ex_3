@@ -8,5 +8,6 @@ private:
     Settings* settings;
 public:
     AlgoSettingsCMD(DefaultIO*, Settings*);
+    ~AlgoSettingsCMD();
     void execute() override;
 };
