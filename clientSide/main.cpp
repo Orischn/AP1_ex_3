@@ -11,7 +11,7 @@ void* read(Client* client);
 
 int main(int argc, char* argv[]) {
     const char* ip = "127.0.0.1";
-    const int port = 42069;
+    const int port = 42068;
     Client* client = new Client();
     client->connectToServer(ip, port);
     pthread_t thread;

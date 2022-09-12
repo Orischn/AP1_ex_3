@@ -11,7 +11,7 @@ typedef void* (*THREADFUNCPTR)(void*);
 void* runServer(Server* server);
 
 int main() {
-    Server server(42069);
+    Server server(42068);
     runServer(&server);
     return 0;
 }

@@ -1,8 +1,105 @@
+#include <vector>
+#include <string>
 #include "command.hpp"
+#include "flower.hpp"
 #include "matrixCommand.hpp"
+#include "settings.hpp"
+#include "testAndTrainData.hpp"
+#include "defaultIO.hpp"
 
-AlgorithmConfusionMatrixCMD::AlgorithmConfusionMatrixCMD() {
+AlgorithmConfusionMatrixCMD::AlgorithmConfusionMatrixCMD(DefaultIO* dio, Settings* settings, TestAndTrainData* TATData) {
 	description = "display algorithm confusion matrix";
+	this->settings = settings;
+	this->TATData = TATData;
+	this->dio = dio;
 }
 
-void AlgorithmConfusionMatrixCMD::execute() {}
+AlgorithmConfusionMatrixCMD::~AlgorithmConfusionMatrixCMD() {
+	delete this->dio;
+}
+
+void AlgorithmConfusionMatrixCMD::execute() {
+	std::vector<Flower> cFlowers = TATData->getTrainDataVector();
+	std::vector<Flower> ucFlowers = TATData->getTestDataVector();
+	int confusionMatrix[3][3] = { {0}, {0}, {0} };
+	std::string temp[ucFlowers.size()];
+	for (int i = 0; i < ucFlowers.size(); i++) {
+		temp[i] = ucFlowers[i].getFlowerType();
+	}
+	for (int i = 0; i < ucFlowers.size(); i++) {
+		temp[i] = ucFlowers[i].getFlowerType();
+		if (settings->getDistanceFunc().compare("EUC") == 0) {
+			ucFlowers[i].classifyFlower(cFlowers, settings->getK(), &Flower::euclidianDisTo);
+		}
+		if (settings->getDistanceFunc().compare("MAN") == 0) {
+			ucFlowers[i].classifyFlower(cFlowers, settings->getK(), &Flower::manhattanDisTo);
+		}
+		if (settings->getDistanceFunc().compare("CHE") == 0) {
+			ucFlowers[i].classifyFlower(cFlowers, settings->getK(), &Flower::chebyshevDisTo);
+		}
+		if (temp[i].compare("Iris-setosa") == 0) {
+			if (ucFlowers[i].getFlowerType().compare("Iris-setosa") == 0) {
+				confusionMatrix[0][0]++;
+			}
+			if (ucFlowers[i].getFlowerType().compare("Iris-versicolor") == 0) {
+				confusionMatrix[0][1]++;
+			}
+			if (ucFlowers[i].getFlowerType().compare("Iris-virginica") == 0) {
+				confusionMatrix[0][2]++;
+			}
+		}
+
+		if (temp[i].compare("Iris-versicolor") == 0) {
+			if (ucFlowers[i].getFlowerType().compare("Iris-setosa") == 0) {
+				confusionMatrix[1][0]++;
+			}
+			if (ucFlowers[i].getFlowerType().compare("Iris-versicolor") == 0) {
+				confusionMatrix[1][1]++;
+			}
+			if (ucFlowers[i].getFlowerType().compare("Iris-virginica") == 0) {
+				confusionMatrix[1][2]++;
+			}
+		}
+
+		if (temp[i].compare("Iris-virginica") == 0) {
+			if (ucFlowers[i].getFlowerType().compare("Iris-setosa") == 0) {
+				confusionMatrix[2][0]++;
+			}
+			if (ucFlowers[i].getFlowerType().compare("Iris-versicolor") == 0) {
+				confusionMatrix[2][1]++;
+			}
+			if (ucFlowers[i].getFlowerType().compare("Iris-virginica") == 0) {
+				confusionMatrix[2][2]++;
+			}
+		}
+	}
+	int firstRowSum = confusionMatrix[0][0] + confusionMatrix[0][1] + confusionMatrix[0][2];
+	int secondRowSum = confusionMatrix[1][0] + confusionMatrix[1][1] + confusionMatrix[1][2];
+	int thirdRowSum = confusionMatrix[2][0] + confusionMatrix[2][1] + confusionMatrix[2][2];
+
+
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			if (i == 0) {
+				confusionMatrix[i][j] = (confusionMatrix[i][j] / firstRowSum) * 100;
+			}
+			if (i == 1) {
+				confusionMatrix[i][j] = (confusionMatrix[i][j] / secondRowSum) * 100;
+			}
+			if (i == 2) {
+				confusionMatrix[i][j] = (confusionMatrix[i][j] / thirdRowSum) * 100;
+			}
+		}
+
+		dio->write("	Iris-setosa		Iris-versicolor		Iris-virginica\n");
+		std::string flowerTypes[3] = { "Iris-setosa", "Iris-versicolor", "Iris-virginica" };
+		for (int i = 0; i < 3; i++) {
+			dio->write(flowerTypes[i] + "		");
+			for (int j = 0; j < 3; j++) {
+				dio->write(confusionMatrix[i][j] + "%	");
+			}
+			dio->write("\n");
+		}
+	}
+}
+

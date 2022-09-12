@@ -33,6 +33,6 @@ void ClassifyDataCMD::execute() {
         data += ucFlowers[i].getFlowerType() + "\n";
     }
     TATData->setResults(data);
-    dio.write("classifying data complete\n");
+    dio->write("classifying data complete\n");
 }
 
